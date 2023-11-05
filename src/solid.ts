@@ -6,15 +6,18 @@ import solid from 'eslint-plugin-solid/dist/configs/typescript.js'
 export function SolidjsPlugin(is: boolean): ConfigItem | {} {
   return is
     ? ({
-        'files': [GLOB_JSX, GLOB_TSX],
+        files: [GLOB_JSX, GLOB_TSX],
         ...solid,
-        'solid/event-handlers': ['error', {
-        // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
-          ignoreCase: false,
-          // if true, warn when spreading event handlers onto JSX. Enable for Solid < v1.6.
-          warnOnSpread: false,
-        }],
-        'solid/imports': 'error',
+        rules: {
+          ...solid.rules,
+          'solid/event-handlers': ['error', {
+          // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
+            ignoreCase: false,
+            // if true, warn when spreading event handlers onto JSX. Enable for Solid < v1.6.
+            warnOnSpread: false,
+          }],
+          'solid/imports': 'error',
+        },
       })
     : {}
 }
