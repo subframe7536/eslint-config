@@ -1,6 +1,6 @@
 ### @subframe7536/eslint-config
 
-extends [antfu's config](https://github.com/antfu/eslint-config), solid-js support
+extends [antfu's config](https://github.com/antfu/eslint-config), with solid-js support
 
 in `eslint.config.js`
 
