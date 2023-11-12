@@ -1,6 +1,6 @@
-import type { Arrayable } from '@subframe7536/type-utils'
 import type { ConfigItem, OptionsOverrides, Rules } from '@antfu/eslint-config'
 import { antfu } from '@antfu/eslint-config'
+import type { Arrayable } from '@subframe7536/type-utils'
 import { SolidjsPlugin } from './solid.js'
 
 type AvailableType = 'ts' | 'tsx' | 'vue' | 'vue-tsx' | 'solid'
@@ -63,7 +63,7 @@ export function defineEslintConfig({
         'eslint-comments/no-unlimited-disable': 'off',
 
         // styles
-        'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+        'style/brace-style': ['error', '1tbs', { allowSingleLine: false }],
 
         ...(isJsx(type)
           ? {
