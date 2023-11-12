@@ -10,13 +10,17 @@ export function SolidjsPlugin(is: boolean): ConfigItem | {} {
         ...solid,
         rules: {
           ...solid.rules,
+          // fix event handler naming
           'solid/event-handlers': ['error', {
-          // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
+            // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
             ignoreCase: false,
             // if true, warn when spreading event handlers onto JSX. Enable for Solid < v1.6.
             warnOnSpread: false,
           }],
+          // fix solid imports names
           'solid/imports': 'error',
+          // enforce kebab-case in style
+          'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
         },
       })
     : {}
