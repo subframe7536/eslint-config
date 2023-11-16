@@ -56,7 +56,7 @@ export function defineEslintConfig({
         'jsx-quotes': ['error', 'prefer-double'],
         'prefer-const': 'off',
         'prefer-promise-reject-errors': 'off',
-        'max-statements-per-line': ['off', { max: 2 }],
+        'max-statements-per-line': ['off'],
         'no-unused-vars': 'off',
 
         // comments
