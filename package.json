@@ -1,7 +1,7 @@
 {
   "name": "@subframe7536/eslint-config",
   "type": "module",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "self use eslint config, extends @antfu",
   "author": "subframe7536",
   "license": "MIT",
