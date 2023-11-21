@@ -1,42 +1,40 @@
-import type { ConfigItem, OptionsOverrides, Rules } from '@antfu/eslint-config'
+import type { FlatConfigItem, OptionsConfig, Rules } from '@antfu/eslint-config'
 import { antfu } from '@antfu/eslint-config'
 import type { Arrayable } from '@subframe7536/type-utils'
-import { SolidjsPlugin } from './solid.js'
+import { solidPlugin } from './solid'
 
-type AvailableType = 'ts' | 'tsx' | 'vue' | 'vue-tsx' | 'solid'
 type RuleOption = 'error' | 'warn' | 'off'
 type RuleConfig = RuleOption | [RuleOption, ...any]
 type Options = {
-  type?: AvailableType
+  jsx?: boolean
+  /**
+   * auto enable jsx
+   */
+  solid?: boolean
+  vue?: boolean
   ignores?: string[]
   rulesOverrideAll?: Partial<Rules & Record<string, RuleConfig>>
-  rulesOverrideAntfu?: OptionsOverrides
-  extraConfig?: Arrayable<ConfigItem>
+  rulesOverrideAntfu?: OptionsConfig['overrides']
+  extraConfig?: Arrayable<FlatConfigItem>
 }
 
-function isSolid(type: AvailableType): boolean {
-  return type === 'solid'
-}
-
-function isVueTsx(type: AvailableType): boolean {
-  return type === 'vue-tsx'
-}
-
-function isJsx(type: AvailableType): boolean {
-  return type === 'tsx' || isSolid(type) || isVueTsx(type)
-}
-
-export function defineEslintConfig({
-  type = 'ts',
+export async function defineEslintConfig({
+  jsx,
+  solid,
+  vue,
   ignores = [],
   rulesOverrideAll,
-  rulesOverrideAntfu,
+  rulesOverrideAntfu: {
+    typescript: overrideTS,
+    vue: overrideVue,
+    ...otherOverrides
+  } = {},
   extraConfig = [],
 }: Options = {}) {
-  return antfu(
+  const isJSX = !!jsx || !!solid
+  return await antfu(
     {
-      // vue: isVue(type), auto detect by default
-      jsx: isJsx(type),
+      ...isJSX ? { jsx: isJSX } : {},
 
       linterOptions: {
         noInlineConfig: false,
@@ -44,8 +42,10 @@ export function defineEslintConfig({
       },
 
       stylistic: {
-        jsx: isJsx(type),
+        jsx: isJSX,
       },
+
+      ...(vue !== undefined) ? { vue } : {},
 
       rules: {
         // base
@@ -65,7 +65,7 @@ export function defineEslintConfig({
         // styles
         'style/brace-style': ['error', '1tbs', { allowSingleLine: false }],
 
-        ...(isJsx(type)
+        ...(isJSX
           ? {
               'style/jsx-child-element-spacing': 'error',
               'style/jsx-closing-bracket-location': ['error', 'line-aligned'],
@@ -140,6 +140,7 @@ export function defineEslintConfig({
               extendDefaults: true,
             },
           ],
+          ...overrideTS,
         },
         vue: {
           'vue/component-definition-name-casing': 'off',
@@ -147,16 +148,12 @@ export function defineEslintConfig({
             singleline: { max: 2 },
             multiline: { max: 1 },
           }],
-          ...(isVueTsx(type)
-            ? {
-                'vue/no-ref-as-operand': 'off',
-              }
-            : {}),
+          ...overrideVue,
         },
-        ...rulesOverrideAntfu,
+        ...otherOverrides,
       },
     },
-    SolidjsPlugin(isSolid(type)),
+    await solidPlugin(!!solid),
     { rules: rulesOverrideAll ?? {} },
     { ignores },
     extraConfig,
