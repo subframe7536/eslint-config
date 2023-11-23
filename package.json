@@ -2,7 +2,7 @@
   "name": "@subframe7536/eslint-config",
   "type": "module",
   "version": "0.5.0",
-  "description": "self use eslint config, extends @antfu",
+  "description": "eslint config extends @antfu, add solid-js support",
   "author": "subframe7536",
   "license": "MIT",
   "keywords": [
@@ -24,12 +24,16 @@
     "release": "pnpm build && bumpp --all && npm publish"
   },
   "peerDependencies": {
-    "eslint": "^8"
+    "eslint": "^8",
+    "eslint-plugin-solid": "^0.13.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-solid": {
+      "optional": true
+    }
   },
   "dependencies": {
-    "@antfu/eslint-config": "^2.0.0",
-    "eslint-plugin-solid": "^0.13.0",
-    "local-pkg": "^0.5.0"
+    "@antfu/eslint-config": "^2.1.0"
   },
   "publishConfig": {
     "access": "public",
@@ -39,6 +43,7 @@
     "@subframe7536/type-utils": "^0.1.4",
     "bumpp": "^9.2.0",
     "eslint": "^8.54.0",
+    "eslint-plugin-solid": "^0.13.0",
     "tsup": "^8.0.1",
     "typescript": "^5.3.2"
   }

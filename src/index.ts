@@ -153,10 +153,10 @@ export async function defineEslintConfig({
         ...otherOverrides,
       },
     },
-    await solidPlugin(!!solid),
-    { rules: rulesOverrideAll ?? {} },
-    { ignores },
-    extraConfig,
+    solid ? await solidPlugin() : {},
+    rulesOverrideAll ? { rules: rulesOverrideAll } : {},
+    ignores ? { ignores } : {},
+    extraConfig ?? {},
   )
 }
 
