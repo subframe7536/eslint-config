@@ -16,7 +16,7 @@ in `eslint.config.js`
 ```js
 import { defineEslintConfig } from '@subframe7536/eslint-config'
 
-export default defineEslintConfig({ type: 'solid' })
+export default defineEslintConfig({ solid: true })
 ```
 
 in `.vscode/settings.json`
