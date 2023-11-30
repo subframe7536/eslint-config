@@ -6,12 +6,38 @@ import { solidPlugin } from './solid'
 type RuleOption = 'error' | 'warn' | 'off'
 type RuleConfig = RuleOption | [RuleOption, ...any]
 type Options = {
+  /**
+   * @default false
+   */
   jsx?: boolean
   /**
    * auto enable jsx
    */
   solid?: boolean
+  /**
+   * @default false
+   */
   vue?: boolean
+  /**
+   * @default false
+   */
+  react?: boolean
+  /**
+   * @default false
+   */
+  unocss?: boolean
+  /**
+   * @default true
+   */
+  vitest?: boolean
+  /**
+   * @default true
+   */
+  markdown?: boolean
+  /**
+   * @default 2
+   */
+  indent?: number | 'tab'
   ignores?: string[]
   rulesOverrideAll?: Partial<Rules & Record<string, RuleConfig>>
   rulesOverrideAntfu?: OptionsConfig['overrides']
@@ -19,9 +45,14 @@ type Options = {
 }
 
 export async function defineEslintConfig({
-  jsx,
-  solid,
-  vue,
+  jsx = false,
+  solid = false,
+  vue = false,
+  react = false,
+  unocss = false,
+  vitest: test = true,
+  markdown = true,
+  indent = 2,
   ignores = [],
   rulesOverrideAll,
   rulesOverrideAntfu: {
@@ -31,10 +62,9 @@ export async function defineEslintConfig({
   } = {},
   extraConfig = [],
 }: Options = {}) {
-  const isJSX = !!jsx || !!solid
+  const isJSX = jsx || solid || react
   return await antfu(
     {
-      ...isJSX ? { jsx: isJSX } : {},
 
       linterOptions: {
         noInlineConfig: false,
@@ -43,9 +73,15 @@ export async function defineEslintConfig({
 
       stylistic: {
         jsx: isJSX,
+        indent,
       },
 
-      ...(vue !== undefined) ? { vue } : {},
+      jsx: isJSX,
+      vue,
+      react,
+      unocss,
+      test,
+      markdown,
 
       rules: {
         // base
@@ -79,7 +115,7 @@ export async function defineEslintConfig({
               'style/jsx-curly-spacing': ['error', {
                 when: 'never',
                 allowMultiline: false,
-                children: false,
+                children: true,
               }],
               'style/jsx-equals-spacing': ['error', 'never'],
               'style/jsx-first-prop-new-line': 'error',
@@ -159,8 +195,3 @@ export async function defineEslintConfig({
     extraConfig ?? {},
   )
 }
-
-export type ScriptProps = Pick<
-  HTMLScriptElement,
-  'defer' | 'crossOrigin' | 'noModule' | 'referrerPolicy' | 'type' | 'async'
->

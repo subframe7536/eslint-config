@@ -1,6 +1,15 @@
 ### @subframe7536/eslint-config
 
-extends [antfu's config](https://github.com/antfu/eslint-config), with solid-js support
+self use eslint config, extends [antfu's config](https://github.com/antfu/eslint-config)
+
+### difference
+
+- add [solid-js](https://github.com/solidjs/solid) support
+- prefer curly
+- prefer global `Buffer`, `process`
+- loose some rules
+
+### setup
 
 in `eslint.config.js`
 
