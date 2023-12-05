@@ -1,4 +1,11 @@
-import type { FlatConfigItem, OptionsConfig, Rules } from '@antfu/eslint-config'
+import type {
+  FlatConfigItem,
+  OptionsConfig,
+  OptionsFormatters,
+  OptionsTypeScriptParserOptions,
+  OptionsTypeScriptWithTypes,
+  Rules,
+} from '@antfu/eslint-config'
 import { antfu } from '@antfu/eslint-config'
 import type { Arrayable } from '@subframe7536/type-utils'
 import { solidPlugin } from './solid'
@@ -38,7 +45,9 @@ type Options = {
    * @default 2
    */
   indent?: number | 'tab'
+  formatters?: boolean | OptionsFormatters
   ignores?: string[]
+  typescript?: boolean | OptionsTypeScriptWithTypes | OptionsTypeScriptParserOptions
   rulesOverrideAll?: Partial<Rules & Record<string, RuleConfig>>
   rulesOverrideAntfu?: OptionsConfig['overrides']
   extraConfig?: Arrayable<FlatConfigItem>
@@ -53,6 +62,8 @@ export async function defineEslintConfig({
   vitest: test = true,
   markdown = true,
   indent = 2,
+  typescript = true,
+  formatters = false,
   ignores = [],
   rulesOverrideAll,
   rulesOverrideAntfu: {
@@ -82,6 +93,8 @@ export async function defineEslintConfig({
       unocss,
       test,
       markdown,
+      formatters,
+      typescript,
 
       rules: {
         // base
