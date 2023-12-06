@@ -7,6 +7,7 @@ self use eslint config, extends [antfu's config](https://github.com/antfu/eslint
 - add [solid-js](https://github.com/solidjs/solid) support
 - prefer curly
 - prefer global `Buffer`, `process`
+- ignores can start with `./`
 - loose some rules
 
 ### setup

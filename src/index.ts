@@ -1,69 +1,36 @@
-import type {
-  FlatConfigItem,
-  OptionsConfig,
-  OptionsFormatters,
-  OptionsTypeScriptParserOptions,
-  OptionsTypeScriptWithTypes,
-  Rules,
-} from '@antfu/eslint-config'
+import type { FlatConfigItem, OptionsConfig, Rules } from '@antfu/eslint-config'
 import { antfu } from '@antfu/eslint-config'
 import type { Arrayable } from '@subframe7536/type-utils'
 import { solidPlugin } from './solid'
 
 type RuleOption = 'error' | 'warn' | 'off'
 type RuleConfig = RuleOption | [RuleOption, ...any]
-type Options = {
+
+type Op = Omit<OptionsConfig, 'overrides'> & {
   /**
-   * @default false
-   */
-  jsx?: boolean
-  /**
-   * auto enable jsx
+   * Enable Solid-js rules
    */
   solid?: boolean
   /**
-   * @default false
+   * Ignore files
    */
-  vue?: boolean
+  ignores?: string | string[]
   /**
-   * @default false
+   * Override antfu's rules
    */
-  react?: boolean
-  /**
-   * @default false
-   */
-  unocss?: boolean
-  /**
-   * @default true
-   */
-  vitest?: boolean
-  /**
-   * @default true
-   */
-  markdown?: boolean
-  /**
-   * @default 2
-   */
-  indent?: number | 'tab'
-  formatters?: boolean | OptionsFormatters
-  ignores?: string[]
-  typescript?: boolean | OptionsTypeScriptWithTypes | OptionsTypeScriptParserOptions
-  rulesOverrideAll?: Partial<Rules & Record<string, RuleConfig>>
   rulesOverrideAntfu?: OptionsConfig['overrides']
+  /**
+   * Override all rules
+   */
+  rulesOverrideAll?: Partial<Rules & Record<string, RuleConfig>>
+  /**
+   * Other configs
+   */
   extraConfig?: Arrayable<FlatConfigItem>
 }
 
-export async function defineEslintConfig({
-  jsx = false,
-  solid = false,
-  vue = false,
-  react = false,
-  unocss = false,
-  vitest: test = true,
-  markdown = true,
-  indent = 2,
-  typescript = true,
-  formatters = false,
+export function defineEslintConfig({
+  solid,
   ignores = [],
   rulesOverrideAll,
   rulesOverrideAntfu: {
@@ -72,29 +39,27 @@ export async function defineEslintConfig({
     ...otherOverrides
   } = {},
   extraConfig = [],
-}: Options = {}) {
-  const isJSX = jsx || solid || react
-  return await antfu(
-    {
+  ...rest
+}: Op = {}) {
+  const isJSX = rest.jsx || rest.react || solid
 
+  const parsedIgnores = Array.isArray(ignores) ? ignores : [ignores]
+
+  const solidConfig = solid ? solidPlugin() : {}
+
+  const rulesConfig = rulesOverrideAll ? { rules: rulesOverrideAll } : {}
+
+  const ignoreConfig = ignores
+    ? { ignores: parsedIgnores.map(i => i.startsWith('./') && i.slice(2)) }
+    : {}
+
+  return antfu(
+    {
+      ...rest,
       linterOptions: {
         noInlineConfig: false,
         reportUnusedDisableDirectives: true,
       },
-
-      stylistic: {
-        jsx: isJSX,
-        indent,
-      },
-
-      jsx: isJSX,
-      vue,
-      react,
-      unocss,
-      test,
-      markdown,
-      formatters,
-      typescript,
 
       rules: {
         // base
@@ -202,9 +167,9 @@ export async function defineEslintConfig({
         ...otherOverrides,
       },
     },
-    solid ? await solidPlugin() : {},
-    rulesOverrideAll ? { rules: rulesOverrideAll } : {},
-    ignores ? { ignores } : {},
-    extraConfig ?? {},
+    solidConfig,
+    rulesConfig,
+    ignoreConfig,
+    extraConfig,
   )
 }
