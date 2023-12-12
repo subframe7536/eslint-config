@@ -24,6 +24,7 @@
     "release": "pnpm build && bumpp --all && npm publish"
   },
   "peerDependencies": {
+    "@subframe7536/type-utils": "^0.1.4",
     "eslint": "^8",
     "eslint-plugin-solid": "^0.13.0"
   },
@@ -33,7 +34,7 @@
     }
   },
   "dependencies": {
-    "@antfu/eslint-config": "^2.3.4"
+    "@antfu/eslint-config": "^2.4.5"
   },
   "publishConfig": {
     "access": "public",

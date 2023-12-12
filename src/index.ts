@@ -41,7 +41,7 @@ export function defineEslintConfig({
   extraConfig = [],
   ...rest
 }: Op = {}) {
-  const isJSX = rest.jsx || rest.react || solid
+  const isJSX = (rest.jsx !== false) || rest.react || solid
 
   const parsedIgnores = Array.isArray(ignores) ? ignores : [ignores]
 

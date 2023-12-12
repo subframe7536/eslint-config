@@ -33,8 +33,8 @@ in `.vscode/settings.json`
 
   // Auto fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": false
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
   },
 
   // Enable eslint for all supported languages
