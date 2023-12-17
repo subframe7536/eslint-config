@@ -6,7 +6,7 @@ import { solidPlugin } from './solid'
 type RuleOption = 'error' | 'warn' | 'off'
 type RuleConfig = RuleOption | [RuleOption, ...any]
 
-type Op = Omit<OptionsConfig, 'overrides'> & {
+type Options = Omit<OptionsConfig, 'overrides'> & {
   /**
    * Enable Solid-js rules
    */
@@ -40,17 +40,20 @@ export function defineEslintConfig({
   } = {},
   extraConfig = [],
   ...rest
-}: Op = {}) {
+}: Options = {}) {
   const isJSX = (rest.jsx !== false) || rest.react || solid
-
-  const parsedIgnores = Array.isArray(ignores) ? ignores : [ignores]
 
   const solidConfig = solid ? solidPlugin() : {}
 
-  const rulesConfig = rulesOverrideAll ? { rules: rulesOverrideAll } : {}
+  const rulesConfig = rulesOverrideAll
+    ? { rules: rulesOverrideAll } satisfies FlatConfigItem
+    : {}
 
+  const parsedIgnores = Array.isArray(ignores) ? ignores : [ignores]
   const ignoreConfig = ignores
-    ? { ignores: parsedIgnores.map(i => i.startsWith('./') && i.slice(2)) }
+    ? {
+      ignores: parsedIgnores.map(i => i.startsWith('./') ? i.slice(2) : i),
+    } satisfies FlatConfigItem
     : {}
 
   return antfu(
