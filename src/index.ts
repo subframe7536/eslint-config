@@ -69,6 +69,7 @@ export function defineEslintConfig({
         'curly': ['error', 'all'],
         'no-console': 'off',
         'no-sequences': 'off',
+        'no-constant-binary-expression': 'error',
         'accessor-pairs': 'off',
         'jsx-quotes': ['error', 'prefer-double'],
         'prefer-const': 'off',
