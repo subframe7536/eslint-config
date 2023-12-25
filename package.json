@@ -34,7 +34,7 @@
     }
   },
   "dependencies": {
-    "@antfu/eslint-config": "^2.4.6"
+    "@antfu/eslint-config": "^2.5.0"
   },
   "publishConfig": {
     "access": "public",
