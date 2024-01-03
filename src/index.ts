@@ -1,4 +1,4 @@
-import type { FlatConfigItem, OptionsConfig, Rules } from '@antfu/eslint-config'
+import type { FlatConfigItem, OptionsConfig, OptionsTypescript, OptionsVue, Rules } from '@antfu/eslint-config'
 import { antfu } from '@antfu/eslint-config'
 import type { Arrayable } from '@subframe7536/type-utils'
 import { solidPlugin } from './solid'
@@ -16,13 +16,9 @@ type Options = Omit<OptionsConfig, 'overrides'> & {
    */
   ignores?: string | string[]
   /**
-   * Override antfu's rules
-   */
-  rulesOverrideAntfu?: OptionsConfig['overrides']
-  /**
    * Override all rules
    */
-  rulesOverrideAll?: Partial<Rules & Record<string, RuleConfig>>
+  overrideRules?: Partial<Rules & Record<string, RuleConfig>>
   /**
    * Other configs
    */
@@ -32,12 +28,7 @@ type Options = Omit<OptionsConfig, 'overrides'> & {
 export function defineEslintConfig({
   solid,
   ignores = [],
-  rulesOverrideAll,
-  rulesOverrideAntfu: {
-    typescript: overrideTS,
-    vue: overrideVue,
-    ...otherOverrides
-  } = {},
+  overrideRules,
   extraConfig = [],
   ...rest
 }: Options = {}) {
@@ -45,8 +36,60 @@ export function defineEslintConfig({
 
   const solidConfig = solid ? solidPlugin() : {}
 
-  const rulesConfig = rulesOverrideAll
-    ? { rules: rulesOverrideAll } satisfies FlatConfigItem
+  // setup override Vue rules
+  const vueConfig: OptionsVue['overrides'] = {
+    'vue/component-definition-name-casing': 'off',
+    'vue/max-attributes-per-line': ['error', {
+      singleline: { max: 2 },
+      multiline: { max: 1 },
+    }],
+  }
+
+  if (rest.vue === undefined || rest.vue === true) {
+    rest.vue = { overrides: vueConfig }
+  } else if (rest.vue !== false) {
+    rest.vue = {
+      ...rest.vue,
+      overrides: {
+        ...vueConfig,
+        ...rest.vue.overrides,
+      },
+    }
+  }
+
+  // setup override TypeScript rules
+  const typescriptConfig: OptionsTypescript['overrides'] = {
+    'ts/explicit-member-accessibility': 'off',
+    'ts/no-unused-vars': 'off',
+    'ts/no-namespace': 'off',
+    'ts/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+    'ts/consistent-type-definitions': ['off'], // whether to force to use interface or type
+    'ts/ban-types': [
+      'error',
+      {
+        types: {
+          '{}': false,
+          'Function': false,
+        },
+        extendDefaults: true,
+      },
+    ],
+  }
+
+  if (rest.typescript === undefined || rest.typescript === true) {
+    rest.typescript = { overrides: typescriptConfig }
+  } else if (rest.typescript !== false) {
+    rest.typescript = {
+      ...rest.typescript,
+      overrides: {
+        ...typescriptConfig,
+        ...rest.typescript.overrides,
+      },
+    }
+  }
+
+  const overrideRulesConfig = overrideRules
+    ? { rules: overrideRules } satisfies FlatConfigItem
     : {}
 
   const parsedIgnores = Array.isArray(ignores) ? ignores : [ignores]
@@ -141,38 +184,9 @@ export function defineEslintConfig({
         'node/prefer-global/process': ['error', 'always'],
       },
 
-      overrides: {
-        typescript: {
-          'ts/explicit-member-accessibility': 'off',
-          'ts/no-unused-vars': 'off',
-          'ts/no-namespace': 'off',
-          'ts/brace-style': ['error', '1tbs', { allowSingleLine: true }],
-          'ts/consistent-type-definitions': ['off'], // whether to force to use interface or type
-          'ts/ban-types': [
-            'error',
-            {
-              types: {
-                '{}': false,
-                'Function': false,
-              },
-              extendDefaults: true,
-            },
-          ],
-          ...overrideTS,
-        },
-        vue: {
-          'vue/component-definition-name-casing': 'off',
-          'vue/max-attributes-per-line': ['error', {
-            singleline: { max: 2 },
-            multiline: { max: 1 },
-          }],
-          ...overrideVue,
-        },
-        ...otherOverrides,
-      },
     },
     solidConfig,
-    rulesConfig,
+    overrideRulesConfig,
     ignoreConfig,
     extraConfig,
   )
