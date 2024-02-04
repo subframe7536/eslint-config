@@ -1,7 +1,7 @@
 {
   "name": "@subframe7536/eslint-config",
   "type": "module",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "description": "eslint config extends @antfu, add solid-js support",
   "author": "subframe7536",
   "license": "MIT",
