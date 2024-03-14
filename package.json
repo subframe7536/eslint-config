@@ -24,7 +24,6 @@
     "release": "pnpm build && bumpp --all && npm publish"
   },
   "peerDependencies": {
-    "@subframe7536/type-utils": "^0.1.4",
     "eslint": "^8",
     "eslint-plugin-solid": "^0.13.1"
   },
@@ -34,19 +33,19 @@
     }
   },
   "dependencies": {
-    "@antfu/eslint-config": "^2.6.4"
+    "@antfu/eslint-config": "^2.8.1"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {
-    "@subframe7536/type-utils": "^0.1.4",
-    "bumpp": "^9.3.0",
-    "eslint": "^8.56.0",
+    "@subframe7536/type-utils": "^0.1.6",
+    "bumpp": "^9.4.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-solid": "^0.13.1",
-    "tsup": "^8.0.1",
-    "typescript": "^5.3.3"
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.2"
   },
   "pnpm": {
     "overrides": {

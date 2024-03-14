@@ -1,6 +1,5 @@
 import type { FlatConfigItem, OptionsConfig, OptionsTypescript, OptionsVue, Rules } from '@antfu/eslint-config'
 import { antfu } from '@antfu/eslint-config'
-import type { Arrayable } from '@subframe7536/type-utils'
 import { solidPlugin } from './solid'
 
 type RuleOption = 'error' | 'warn' | 'off'
@@ -22,7 +21,7 @@ type Options = Omit<OptionsConfig, 'overrides'> & {
   /**
    * Other configs
    */
-  extraConfig?: Arrayable<FlatConfigItem>
+  extraConfig?: FlatConfigItem | FlatConfigItem[]
 }
 
 export function defineEslintConfig({
