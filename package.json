@@ -33,7 +33,7 @@
     }
   },
   "dependencies": {
-    "@antfu/eslint-config": "^2.8.1"
+    "@antfu/eslint-config": "^2.9.0"
   },
   "publishConfig": {
     "access": "public",
@@ -43,9 +43,9 @@
     "@subframe7536/type-utils": "^0.1.6",
     "bumpp": "^9.4.0",
     "eslint": "^8.57.0",
-    "eslint-plugin-solid": "^0.13.1",
+    "eslint-plugin-solid": "^0.13.2",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "pnpm": {
     "overrides": {
