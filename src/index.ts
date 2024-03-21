@@ -100,6 +100,7 @@ export function defineEslintConfig({
 
   return antfu(
     {
+      name: 'subframe7536:basic:rules',
       ...rest,
       linterOptions: {
         noInlineConfig: false,
@@ -113,7 +114,6 @@ export function defineEslintConfig({
         'no-sequences': 'off',
         'no-constant-binary-expression': 'error',
         'accessor-pairs': 'off',
-        'jsx-quotes': ['error', 'prefer-double'],
         'prefer-const': 'off',
         'prefer-promise-reject-errors': 'off',
         'max-statements-per-line': ['off'],
@@ -127,6 +127,7 @@ export function defineEslintConfig({
 
         ...(isJSX
           ? {
+              'style/jsx-quotes': ['error', 'prefer-double'],
               'style/jsx-child-element-spacing': 'error',
               'style/jsx-closing-bracket-location': ['error', 'line-aligned'],
               'style/jsx-closing-tag-location': 'error',

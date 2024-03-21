@@ -9,19 +9,23 @@ import {
 export async function solidPlugin(): Promise<FlatConfigItem[]> {
   await ensurePackages(['eslint-plugin-solid'])
   const solid = await interopDefault(
-    // @ts-expect-error no dts
-    import('eslint-plugin-solid'),
+    import('eslint-plugin-solid/configs/typescript'),
   )
   return [
     {
       name: 'subframe7536:solid:setup',
-      plugins: { solid },
+      plugins: solid.plugins,
     },
     {
       name: 'subframe7536:solid:rules',
       files: [GLOB_JSX, GLOB_TSX],
+      // @ts-expect-error ignore
       rules: {
-        ...solid.configs.typescript.rules,
+        ...solid.rules,
+        'solid/no-react-deps': 'error',
+        'solid/no-react-specific-props': 'error',
+        'solid/components-return-once': 'error',
+        'solid/self-closing-comp': 'error',
         // fix event handler naming
         'solid/event-handlers': ['error', {
         // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
