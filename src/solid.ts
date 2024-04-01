@@ -1,12 +1,12 @@
 import {
-  type FlatConfigItem,
   GLOB_JSX,
   GLOB_TSX,
+  type TypedFlatConfigItem,
   ensurePackages,
   interopDefault,
 } from '@antfu/eslint-config'
 
-export async function solidPlugin(): Promise<FlatConfigItem> {
+export async function solidPlugin(): Promise<TypedFlatConfigItem> {
   await ensurePackages(['eslint-plugin-solid'])
   const solid = await interopDefault(
     // @ts-expect-error ignore
