@@ -20,6 +20,27 @@ import { defineEslintConfig } from '@subframe7536/eslint-config'
 export default defineEslintConfig({ solid: true })
 ```
 
+types:
+
+```ts
+import type { OptionsConfig, TypedFlatConfigItem } from '@antfu/eslint-config'
+
+type Options = Omit<OptionsConfig, 'overrides'> & {
+  /**
+   * Enable Solid-js rules
+   */
+  solid?: boolean
+  /**
+   * Ignore files
+   */
+  ignores?: string | string[]
+  /**
+   * Override all rules
+   */
+  overrideRules?: TypedFlatConfigItem['rules']
+}
+```
+
 in `.vscode/settings.json`
 
 ```json
