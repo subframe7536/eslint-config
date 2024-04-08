@@ -2,7 +2,7 @@
   "name": "@subframe7536/eslint-config",
   "type": "module",
   "version": "0.6.0",
-  "description": "eslint config extends @antfu, add solid-js support",
+  "description": "eslint config extends @antfu",
   "author": "subframe7536",
   "license": "MIT",
   "keywords": [
@@ -24,8 +24,8 @@
     "release": "pnpm build && bumpp --all && npm publish"
   },
   "peerDependencies": {
-    "eslint": "^8",
-    "eslint-plugin-solid": "^0.13.1"
+    "eslint": ">=8.40",
+    "eslint-plugin-solid": "^0.13.2"
   },
   "peerDependenciesMeta": {
     "eslint-plugin-solid": {
@@ -33,7 +33,7 @@
     }
   },
   "dependencies": {
-    "@antfu/eslint-config": "^2.11.6"
+    "@antfu/eslint-config": "^2.13.0"
   },
   "publishConfig": {
     "access": "public",
@@ -45,12 +45,13 @@
     "eslint": "^8.57.0",
     "eslint-plugin-solid": "^0.13.2",
     "tsup": "^8.0.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4"
   },
   "pnpm": {
     "overrides": {
       "array-includes": "npm:@nolyfill/array-includes@latest",
       "has": "npm:@nolyfill/has@latest",
+      "hasown": "npm:@nolyfill/hasown@latest",
       "object.assign": "npm:@nolyfill/object.assign@latest"
     }
   }

@@ -1,12 +1,7 @@
 import type { OptionsConfig, OptionsTypescript, OptionsVue, TypedFlatConfigItem } from '@antfu/eslint-config'
 import { antfu } from '@antfu/eslint-config'
-import { solidPlugin } from './solid'
 
 type Options = Omit<OptionsConfig, 'overrides'> & {
-  /**
-   * Enable Solid-js rules
-   */
-  solid?: boolean
   /**
    * Ignore files
    */
@@ -19,16 +14,11 @@ type Options = Omit<OptionsConfig, 'overrides'> & {
 
 export function defineEslintConfig(
   {
-    solid,
     ignores = [],
     overrideRules,
     ...rest
   }: Options = {},
 ): ReturnType<typeof antfu> {
-  const isJSX = (rest.jsx !== false) || rest.react || solid
-
-  const solidConfig = solid ? solidPlugin() : {}
-
   // setup override Vue rules
   const vueConfig: OptionsVue['overrides'] = {
     'vue/component-definition-name-casing': 'off',
@@ -93,7 +83,7 @@ export function defineEslintConfig(
     : {}
 
   return antfu({
-    name: 'subframe7536:basic:rules',
+    name: 'subframe7536/basic/rules',
     ...rest,
     linterOptions: {
       noInlineConfig: false,
@@ -118,57 +108,53 @@ export function defineEslintConfig(
       // styles
       'style/brace-style': ['error', '1tbs', { allowSingleLine: false }],
 
-      ...(isJSX
-        ? {
-            'style/jsx-quotes': ['error', 'prefer-double'],
-            'style/jsx-child-element-spacing': 'error',
-            'style/jsx-closing-bracket-location': ['error', 'line-aligned'],
-            'style/jsx-closing-tag-location': 'error',
-            'style/jsx-curly-brace-presence': ['error', {
-              children: 'never',
-              propElementValues: 'always',
-              props: 'never',
-            }],
-            'style/jsx-curly-newline': ['error'],
-            'style/jsx-curly-spacing': ['error', {
-              when: 'never',
-              allowMultiline: false,
-              children: true,
-            }],
-            'style/jsx-equals-spacing': ['error', 'never'],
-            'style/jsx-first-prop-new-line': 'error',
-            'style/jsx-indent-props': ['error', 2],
-            'style/jsx-indent': ['error', 2, {
-              checkAttributes: true,
-              indentLogicalExpressions: true,
-            }],
-            'style/jsx-max-props-per-line': ['error', {
-              maximum: { multi: 1, single: 2 },
-            }],
-            'style/jsx-newline': 'off',
-            'style/jsx-one-expression-per-line': 'off',
-            'style/jsx-props-no-multi-spaces': 'error',
-            'style/jsx-sort-props': 'off',
-            'style/jsx-tag-spacing': [
-              'error',
-              {
-                afterOpening: 'never',
-                beforeClosing: 'never',
-                beforeSelfClosing: 'always',
-                closingSlash: 'never',
-              },
-            ],
-            'style/jsx-wrap-multilines': ['error', {
-              arrow: 'parens-new-line',
-              assignment: 'parens-new-line',
-              condition: 'parens-new-line',
-              declaration: 'parens-new-line',
-              logical: 'parens-new-line',
-              prop: 'parens-new-line',
-              return: 'parens-new-line',
-            }],
-          }
-        : {}),
+      'style/jsx-quotes': ['error', 'prefer-double'],
+      'style/jsx-child-element-spacing': 'error',
+      'style/jsx-closing-bracket-location': ['error', 'line-aligned'],
+      'style/jsx-closing-tag-location': 'error',
+      'style/jsx-curly-brace-presence': ['error', {
+        children: 'never',
+        propElementValues: 'always',
+        props: 'never',
+      }],
+      'style/jsx-curly-newline': ['error'],
+      'style/jsx-curly-spacing': ['error', {
+        when: 'never',
+        allowMultiline: false,
+        children: true,
+      }],
+      'style/jsx-equals-spacing': ['error', 'never'],
+      'style/jsx-first-prop-new-line': 'error',
+      'style/jsx-indent-props': ['error', 2],
+      'style/jsx-indent': ['error', 2, {
+        checkAttributes: true,
+        indentLogicalExpressions: true,
+      }],
+      'style/jsx-max-props-per-line': ['error', {
+        maximum: { multi: 1, single: 2 },
+      }],
+      'style/jsx-newline': 'off',
+      'style/jsx-one-expression-per-line': 'off',
+      'style/jsx-props-no-multi-spaces': 'error',
+      'style/jsx-sort-props': 'off',
+      'style/jsx-tag-spacing': [
+        'error',
+        {
+          afterOpening: 'never',
+          beforeClosing: 'never',
+          beforeSelfClosing: 'always',
+          closingSlash: 'never',
+        },
+      ],
+      'style/jsx-wrap-multilines': ['error', {
+        arrow: 'parens-new-line',
+        assignment: 'parens-new-line',
+        condition: 'parens-new-line',
+        declaration: 'parens-new-line',
+        logical: 'parens-new-line',
+        prop: 'parens-new-line',
+        return: 'parens-new-line',
+      }],
 
       // node
       // always use global Buffer
@@ -177,7 +163,6 @@ export function defineEslintConfig(
       'node/prefer-global/process': ['error', 'always'],
     },
   })
-    .append(solidConfig)
     .append(overrideRulesConfig)
     .append(ignoreConfig)
 }
