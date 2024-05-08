@@ -24,28 +24,21 @@
     "release": "pnpm build && bumpp --all && npm publish"
   },
   "peerDependencies": {
-    "@antfu/eslint-config": "^2.16.0",
     "eslint": ">=8.40"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
+  "dependencies": {
+    "@antfu/eslint-config": "^2.16.2"
+  },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.16.0",
     "@subframe7536/type-utils": "^0.1.6",
     "bumpp": "^9.4.0",
     "eslint": "^9.1.1",
     "eslint-plugin-solid": "^0.14.0",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5"
-  },
-  "pnpm": {
-    "overrides": {
-      "array-includes": "npm:@nolyfill/array-includes@latest",
-      "has": "npm:@nolyfill/has@latest",
-      "hasown": "npm:@nolyfill/hasown@latest",
-      "object.assign": "npm:@nolyfill/object.assign@latest"
-    }
   }
 }
