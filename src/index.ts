@@ -35,54 +35,7 @@ export const basicRules: Rules & Linter.RulesRecord = {
 
   // styles
   'style/brace-style': ['error', '1tbs', { allowSingleLine: false }],
-
-  'style/jsx-quotes': ['error', 'prefer-double'],
-  'style/jsx-child-element-spacing': 'error',
-  'style/jsx-closing-bracket-location': ['error', 'line-aligned'],
-  'style/jsx-closing-tag-location': 'error',
-  'style/jsx-curly-brace-presence': ['error', {
-    children: 'never',
-    propElementValues: 'always',
-    props: 'never',
-  }],
-  'style/jsx-curly-newline': ['error'],
-  'style/jsx-curly-spacing': ['error', {
-    when: 'never',
-    allowMultiline: false,
-    children: true,
-  }],
-  'style/jsx-equals-spacing': ['error', 'never'],
-  'style/jsx-first-prop-new-line': 'error',
-  'style/jsx-indent-props': ['error', 2],
-  'style/jsx-indent': ['error', 2, {
-    checkAttributes: true,
-    indentLogicalExpressions: true,
-  }],
-  'style/jsx-max-props-per-line': ['error', {
-    maximum: { multi: 1, single: 2 },
-  }],
-  'style/jsx-newline': 'off',
-  'style/jsx-one-expression-per-line': 'off',
-  'style/jsx-props-no-multi-spaces': 'error',
-  'style/jsx-sort-props': 'off',
-  'style/jsx-tag-spacing': [
-    'error',
-    {
-      afterOpening: 'never',
-      beforeClosing: 'never',
-      beforeSelfClosing: 'always',
-      closingSlash: 'never',
-    },
-  ],
-  'style/jsx-wrap-multilines': ['error', {
-    arrow: 'parens-new-line',
-    assignment: 'parens-new-line',
-    condition: 'parens-new-line',
-    declaration: 'parens-new-line',
-    logical: 'parens-new-line',
-    prop: 'parens-new-line',
-    return: 'parens-new-line',
-  }],
+  'style/jsx-one-expression-per-line': ['error', { allow: 'single-line' }],
 
   // node
   // always use global Buffer
