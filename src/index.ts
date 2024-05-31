@@ -1,5 +1,6 @@
 import type {
   OptionsConfig,
+  OptionsOverrides,
   OptionsTypescript,
   OptionsVue,
   Rules,
@@ -70,6 +71,20 @@ export const vueConfig: OptionsVue['overrides'] = {
   }],
 }
 
+export const solidConfig: OptionsOverrides['overrides'] = {
+  'solid/reactivity': [
+    'warn',
+    {
+      customReactiveFunctions: [
+        'watch',
+        'watchOnce',
+        'watchRendered',
+        'watchInstant',
+      ],
+    },
+  ],
+}
+
 export function defineEslintConfig(
   {
     ignores = [],
@@ -103,18 +118,31 @@ export function defineEslintConfig(
     }
   }
 
+  if (rest.solid === undefined || rest.solid === true) {
+    rest.solid = { overrides: solidConfig }
+  } else if (rest.solid !== false) {
+    rest.solid = {
+      ...rest.solid,
+      overrides: {
+        ...solidConfig,
+        ...rest.solid.overrides,
+      },
+    }
+  }
+
   const overrideRulesConfig = overrideRules
-    ? { rules: overrideRules } satisfies TypedFlatConfigItem
+    ? { name: 'subframe7536/override', rules: overrideRules } satisfies TypedFlatConfigItem
     : {}
 
   const ignoreConfig = ignores
     ? {
+      name: 'subframe7536/ignore',
       ignores: toArray(ignores).map(i => i.startsWith('./') ? i.slice(2) : i),
     } satisfies TypedFlatConfigItem
     : {}
 
   return antfu({
-    name: 'subframe7536/basic/rules',
+    name: 'subframe7536/rules',
     ...rest,
     linterOptions: {
       noInlineConfig: false,
