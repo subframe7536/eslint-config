@@ -1,7 +1,7 @@
 {
   "name": "@subframe7536/eslint-config",
   "type": "module",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "eslint config extends @antfu",
   "author": "subframe7536",
   "license": "MIT",
@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "release": "pnpm build && bumpp --all && npm publish"
+    "release": "bun run build && bumpp --all && npm publish"
   },
   "peerDependencies": {
     "eslint": ">=8.40"
