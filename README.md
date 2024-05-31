@@ -4,11 +4,11 @@ self use eslint config, extends [antfu's config](https://github.com/antfu/eslint
 
 ### difference
 
-- add [solid-js](https://github.com/solidjs/solid) support
-- prefer curly
+- prefer curly everywhere
 - prefer global `Buffer`, `process`
 - ignores can start with `./`
 - loose some rules
+- ignore `solid/reactivity` in `watch()`
 
 ### setup
 
