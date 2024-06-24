@@ -94,9 +94,9 @@ export function defineEslintConfig(
 ): ReturnType<typeof antfu> {
   // setup override Vue rules
 
-  if (rest.vue === undefined || rest.vue === true) {
+  if (rest.vue === true) {
     rest.vue = { overrides: vueConfig }
-  } else if (rest.vue !== false) {
+  } else if (rest.vue !== undefined && rest.vue !== false) {
     rest.vue = {
       ...rest.vue,
       overrides: {
@@ -118,9 +118,9 @@ export function defineEslintConfig(
     }
   }
 
-  if (rest.solid === undefined || rest.solid === true) {
+  if (rest.solid === true) {
     rest.solid = { overrides: solidConfig }
-  } else if (rest.solid !== false) {
+  } else if (rest.solid !== undefined && rest.solid !== false) {
     rest.solid = {
       ...rest.solid,
       overrides: {
