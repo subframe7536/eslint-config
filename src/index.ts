@@ -51,16 +51,8 @@ export const typescriptConfig: OptionsTypescript['overrides'] = {
   'ts/no-unused-vars': 'off',
   'ts/no-namespace': 'off',
   'ts/consistent-type-definitions': ['off'], // whether to force to use interface or type
-  'ts/ban-types': [
-    'error',
-    {
-      types: {
-        '{}': false,
-        'Function': false,
-      },
-      extendDefaults: true,
-    },
-  ],
+  'ts/no-empty-function': 'off',
+  'ts/no-empty-object-type': 'off',
 }
 
 export const vueConfig: OptionsVue['overrides'] = {
