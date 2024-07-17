@@ -1,6 +1,7 @@
 import type {
   OptionsConfig,
   OptionsOverrides,
+  OptionsStylistic,
   OptionsTypescript,
   OptionsVue,
   Rules,
@@ -13,7 +14,7 @@ type Options = Omit<OptionsConfig, 'overrides'> & {
   /**
    * Ignore files
    */
-  ignores?: string | string[]
+  ignoreAll?: string | string[]
   /**
    * Override all rules
    */
@@ -49,7 +50,6 @@ export const typescriptConfig: OptionsTypescript['overrides'] = {
   'ts/explicit-member-accessibility': 'off',
   'ts/no-unused-vars': 'off',
   'ts/no-namespace': 'off',
-  'ts/brace-style': ['error', '1tbs', { allowSingleLine: true }],
   'ts/consistent-type-definitions': ['off'], // whether to force to use interface or type
   'ts/ban-types': [
     'error',
@@ -87,7 +87,7 @@ export const solidConfig: OptionsOverrides['overrides'] = {
 
 export function defineEslintConfig(
   {
-    ignores = [],
+    ignoreAll,
     overrideRules,
     ...rest
   }: Options = {},
@@ -131,13 +131,16 @@ export function defineEslintConfig(
   }
 
   const overrideRulesConfig = overrideRules
-    ? { name: 'subframe7536/override', rules: overrideRules } satisfies TypedFlatConfigItem
+    ? {
+      name: 'subframe7536/override',
+      rules: overrideRules,
+    } satisfies TypedFlatConfigItem
     : {}
 
-  const ignoreConfig = ignores
+  const ignoreConfig = ignoreAll
     ? {
       name: 'subframe7536/ignore',
-      ignores: toArray(ignores).map(i => i.startsWith('./') ? i.slice(2) : i),
+      ignores: toArray(ignoreAll).map(i => i.startsWith('./') ? i.slice(2) : i),
     } satisfies TypedFlatConfigItem
     : {}
 
