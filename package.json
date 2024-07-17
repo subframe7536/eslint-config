@@ -31,14 +31,13 @@
     "registry": "https://registry.npmjs.org"
   },
   "dependencies": {
-    "@antfu/eslint-config": "^2.19.1"
+    "@antfu/eslint-config": "^2.22.4"
   },
   "devDependencies": {
     "@subframe7536/type-utils": "^0.1.6",
     "bumpp": "^9.4.1",
-    "eslint": "^9.3.0",
-    "eslint-plugin-solid": "^0.14.0",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.5"
+    "eslint": "^9.7.0",
+    "tsup": "^8.1.1",
+    "typescript": "^5.5.3"
   }
 }
