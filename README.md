@@ -9,6 +9,7 @@ self use eslint config, extends [antfu's config](https://github.com/antfu/eslint
 - ignores can start with `./`
 - loose some rules
 - ignore `solid/reactivity` in `watch()`
+- `type: 'lib'` by default
 
 ### setup
 

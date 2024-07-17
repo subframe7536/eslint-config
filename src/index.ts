@@ -138,6 +138,7 @@ export function defineEslintConfig(
 
   return antfu({
     name: 'subframe7536/rules',
+    type: 'lib',
     ...rest,
     linterOptions: {
       noInlineConfig: false,
