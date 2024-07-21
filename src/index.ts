@@ -12,6 +12,11 @@ import type { Linter } from 'eslint'
 
 type Options = Omit<OptionsConfig, 'overrides'> & {
   /**
+   * project type
+   * @default 'lib'
+   */
+  type?: 'app' | 'lib'
+  /**
    * Ignore files
    */
   ignoreAll?: string | string[]
@@ -79,6 +84,7 @@ export const solidConfig: OptionsOverrides['overrides'] = {
 
 export function defineEslintConfig(
   {
+    type = 'lib',
     ignoreAll,
     overrideRules,
     ...rest
@@ -138,7 +144,7 @@ export function defineEslintConfig(
 
   return antfu({
     name: 'subframe7536/rules',
-    type: 'lib',
+    type,
     ...rest,
     linterOptions: {
       noInlineConfig: false,
