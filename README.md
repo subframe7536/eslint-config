@@ -16,9 +16,20 @@ self use eslint config, extends [antfu's config](https://github.com/antfu/eslint
 in `eslint.config.js`
 
 ```js
-import { defineEslintConfig } from '@subframe7536/eslint-config'
+import { GLOB_MARKDOWN_CODE, defineEslintConfig } from '@subframe7536/eslint-config'
 
-export default defineEslintConfig({ solid: true })
+export default defineEslintConfig({
+  solid: true,
+  type: 'app',
+  ignoreAll: './dev/**.*',
+  ignoreRulesOnFiles: {
+    files: [GLOB_MARKDOWN_CODE],
+    rules: ['ts/explicit-function-return-type'],
+  },
+  overrideRules: {
+    'node/prefer-global/buffer': ['error', 'always'],
+  },
+})
 ```
 
 types:
