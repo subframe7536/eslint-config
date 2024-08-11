@@ -1,7 +1,6 @@
 import type {
   OptionsConfig,
   OptionsOverrides,
-  OptionsStylistic,
   OptionsTypescript,
   OptionsVue,
   Rules,
@@ -9,6 +8,8 @@ import type {
 } from '@antfu/eslint-config'
 import { antfu, toArray } from '@antfu/eslint-config'
 import type { Linter } from 'eslint'
+
+type Arrayable<T> = T | T[]
 
 type Options = Omit<OptionsConfig, 'overrides'> & {
   /**
@@ -19,7 +20,24 @@ type Options = Omit<OptionsConfig, 'overrides'> & {
   /**
    * Ignore files
    */
-  ignoreAll?: string | string[]
+  ignoreAll?: Arrayable<string>
+  /**
+   * Ignore target rules on target files
+   * @example
+   * export default defineEslintConfig({
+   *   ignoreRulesOnFiles: {
+   *     files: [GLOB_MARKDOWN_CODE],
+   *     rules: ['ts/explicit-function-return-type'],
+   *   },
+   * })
+   */
+  ignoreRuleOnFile?: Arrayable<{
+    /**
+     * You can use `GLOB_MARKDOWN_CODE` and other predefined globs
+     */
+    files: Arrayable<string>
+    rules: Arrayable<keyof Rules>
+  }>
   /**
    * Override all rules
    */
@@ -86,6 +104,7 @@ export function defineEslintConfig(
   {
     type = 'lib',
     ignoreAll,
+    ignoreRuleOnFile,
     overrideRules,
     ...rest
   }: Options = {},
@@ -135,14 +154,25 @@ export function defineEslintConfig(
     } satisfies TypedFlatConfigItem
     : {}
 
-  const ignoreConfig = ignoreAll
+  const ignoreAllConfig = ignoreAll
     ? {
       name: 'subframe7536/ignore',
       ignores: toArray(ignoreAll).map(i => i.startsWith('./') ? i.slice(2) : i),
     } satisfies TypedFlatConfigItem
     : {}
 
-  return antfu({
+  const ignoreRulesOnFilesConfig: TypedFlatConfigItem[] = []
+  if (ignoreRuleOnFile) {
+    for (const [i, conf] of Object.entries(toArray(ignoreRuleOnFile))) {
+      ignoreRulesOnFilesConfig.push({
+        name: `subframe7536/ignore-rules-on-files-${i}`,
+        files: toArray(conf.files).map(i => i.startsWith('./') ? i.slice(2) : i),
+        rules: Object.fromEntries(toArray(conf.rules).map(r => [r, 'off'])),
+      })
+    }
+  }
+
+  const finalConfig = antfu({
     name: 'subframe7536/rules',
     type,
     ...rest,
@@ -153,8 +183,48 @@ export function defineEslintConfig(
 
     rules: basicRules,
   })
-    .append(overrideRulesConfig)
-    .append(ignoreConfig)
+  if (overrideRules) {
+    finalConfig.append(overrideRulesConfig)
+  }
+  if (ignoreRulesOnFilesConfig.length) {
+    finalConfig.append(...ignoreRulesOnFilesConfig)
+  }
+  if (ignoreAll) {
+    finalConfig.append(ignoreAllConfig)
+  }
+  return finalConfig
 }
 
 export default defineEslintConfig
+
+export {
+  GLOB_ALL_SRC,
+  GLOB_ASTRO,
+  GLOB_ASTRO_TS,
+  GLOB_CSS,
+  GLOB_EXCLUDE,
+  GLOB_GRAPHQL,
+  GLOB_HTML,
+  GLOB_JS,
+  GLOB_JSON,
+  GLOB_JSON5,
+  GLOB_JSONC,
+  GLOB_JSX,
+  GLOB_LESS,
+  GLOB_MARKDOWN,
+  GLOB_MARKDOWN_CODE,
+  GLOB_MARKDOWN_IN_MARKDOWN,
+  GLOB_POSTCSS,
+  GLOB_SCSS,
+  GLOB_SRC,
+  GLOB_SRC_EXT,
+  GLOB_STYLE,
+  GLOB_SVELTE,
+  GLOB_TESTS,
+  GLOB_TOML,
+  GLOB_TS,
+  GLOB_TSX,
+  GLOB_VUE,
+  GLOB_XML,
+  GLOB_YAML,
+} from '@antfu/eslint-config'
