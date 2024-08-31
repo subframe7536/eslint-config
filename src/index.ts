@@ -11,13 +11,14 @@ import type { Linter } from 'eslint'
 
 type Arrayable<T> = T | T[]
 
-type Options = Omit<OptionsConfig, 'overrides'> & {
+type Options = Omit<OptionsConfig, 'overrides'> & Omit<TypedFlatConfigItem, 'files'> & {
   /**
    * project type
    * @default 'lib'
    */
   type?: 'app' | 'lib'
   /**
+   * @deprecated use `ignores` instead
    * Ignore files
    */
   ignoreAll?: Arrayable<string>
@@ -227,4 +228,5 @@ export {
   GLOB_VUE,
   GLOB_XML,
   GLOB_YAML,
+  GLOB_SVG,
 } from '@antfu/eslint-config'
