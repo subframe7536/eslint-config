@@ -8,6 +8,7 @@ import type {
 } from '@antfu/eslint-config'
 import { antfu, toArray } from '@antfu/eslint-config'
 import type { Linter } from 'eslint'
+import { isPackageExists } from 'local-pkg'
 
 type Arrayable<T> = T | T[]
 
@@ -107,6 +108,7 @@ export function defineEslintConfig(
     ignoreAll,
     ignoreRuleOnFile,
     overrideRules,
+    solid = isPackageExists('solid-js'),
     ...rest
   }: Options = {},
 ): ReturnType<typeof antfu> {
@@ -136,14 +138,14 @@ export function defineEslintConfig(
     }
   }
 
-  if (rest.solid === true) {
-    rest.solid = { overrides: solidConfig }
-  } else if (rest.solid !== undefined && rest.solid !== false) {
-    rest.solid = {
-      ...rest.solid,
+  if (solid === true) {
+    solid = { overrides: solidConfig }
+  } else if (solid !== false) {
+    solid = {
+      ...solid,
       overrides: {
         ...solidConfig,
-        ...rest.solid.overrides,
+        ...solid.overrides,
       },
     }
   }
@@ -176,6 +178,7 @@ export function defineEslintConfig(
   const finalConfig = antfu({
     name: 'subframe7536/rules',
     type,
+    solid,
     ...rest,
     linterOptions: {
       noInlineConfig: false,
