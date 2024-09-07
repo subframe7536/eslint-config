@@ -183,9 +183,13 @@ export function defineEslintConfig(
     linterOptions: {
       noInlineConfig: false,
       reportUnusedDisableDirectives: true,
+      ...rest.linterOptions,
     },
 
-    rules: basicRules,
+    rules: {
+      ...basicRules,
+      ...rest.rules,
+    },
   })
   if (overrideRules) {
     finalConfig.append(overrideRulesConfig)
