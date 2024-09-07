@@ -31,7 +31,7 @@
     "local-pkg": "*"
   },
   "dependencies": {
-    "@antfu/eslint-config": "3.2.2",
+    "@antfu/eslint-config": "3.3.2",
     "eslint-plugin-solid": "^0.14.3"
   },
   "devDependencies": {
