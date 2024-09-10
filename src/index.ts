@@ -1,3 +1,5 @@
+import { antfu, toArray } from '@antfu/eslint-config'
+import { isPackageExists } from 'local-pkg'
 import type {
   OptionsConfig,
   OptionsOverrides,
@@ -6,9 +8,7 @@ import type {
   Rules,
   TypedFlatConfigItem,
 } from '@antfu/eslint-config'
-import { antfu, toArray } from '@antfu/eslint-config'
 import type { Linter } from 'eslint'
-import { isPackageExists } from 'local-pkg'
 
 type Arrayable<T> = T | T[]
 
@@ -228,6 +228,7 @@ export {
   GLOB_SRC_EXT,
   GLOB_STYLE,
   GLOB_SVELTE,
+  GLOB_SVG,
   GLOB_TESTS,
   GLOB_TOML,
   GLOB_TS,
@@ -235,5 +236,4 @@ export {
   GLOB_VUE,
   GLOB_XML,
   GLOB_YAML,
-  GLOB_SVG,
 } from '@antfu/eslint-config'
