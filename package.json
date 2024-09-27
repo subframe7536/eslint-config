@@ -1,7 +1,7 @@
 {
   "name": "@subframe7536/eslint-config",
   "type": "module",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "eslint config extends @antfu",
   "author": "subframe7536",
   "license": "MIT",
@@ -31,8 +31,7 @@
     "local-pkg": "*"
   },
   "dependencies": {
-    "@antfu/eslint-config": "3.7.3",
-    "eslint-plugin-solid": "^0.14.3"
+    "@antfu/eslint-config": "3.7.3"
   },
   "devDependencies": {
     "@subframe7536/type-utils": "^0.1.6",
