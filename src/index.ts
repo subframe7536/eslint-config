@@ -78,6 +78,9 @@ export const typescriptConfig: OptionsTypescript['overrides'] = {
   'ts/consistent-type-definitions': ['off'], // whether to force to use interface or type
   'ts/no-empty-function': 'off',
   'ts/no-empty-object-type': 'off',
+}
+
+export const typeAwareConfig: OptionsTypescript['overrides'] = {
   'ts/return-await': ['error', 'always'],
   'ts/no-unsafe-return': 'off',
 }
