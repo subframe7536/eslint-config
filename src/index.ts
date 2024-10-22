@@ -57,6 +57,9 @@ export const basicRules: Rules & Linter.RulesRecord = {
   'max-statements-per-line': ['off'],
   'no-unused-vars': 'off',
 
+  // prevent antfu's rule
+  'antfu/no-top-level-await': 'off',
+
   // comments
   'eslint-comments/no-unlimited-disable': 'off',
 
