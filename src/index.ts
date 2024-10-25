@@ -1,5 +1,3 @@
-import { antfu, toArray } from '@antfu/eslint-config'
-import { isPackageExists } from 'local-pkg'
 import type {
   OptionsConfig,
   OptionsOverrides,
@@ -9,6 +7,8 @@ import type {
   TypedFlatConfigItem,
 } from '@antfu/eslint-config'
 import type { Linter } from 'eslint'
+import { antfu, GLOB_ASTRO, toArray } from '@antfu/eslint-config'
+import { isPackageExists } from 'local-pkg'
 
 type Arrayable<T> = T | T[]
 
@@ -199,6 +199,14 @@ export function defineEslintConfig(
       ...rest.rules,
     },
   })
+  if (rest.astro) {
+    finalConfig.append({
+      files: [GLOB_ASTRO],
+      rules: {
+        'style/jsx-one-expression-per-line': 'off',
+      },
+    })
+  }
   if (overrideRules) {
     finalConfig.append(overrideRulesConfig)
   }
