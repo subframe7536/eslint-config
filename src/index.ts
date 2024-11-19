@@ -59,6 +59,7 @@ export const basicRules: Rules & Linter.RulesRecord = {
 
   // prevent antfu's rule
   'antfu/no-top-level-await': 'off',
+  'antfu/no-import-dist': 'off',
 
   // comments
   'eslint-comments/no-unlimited-disable': 'off',
