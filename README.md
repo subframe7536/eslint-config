@@ -1,6 +1,38 @@
+# @subframe7536/eslint-config
+
+Fork from [`@antfu/eslint-config@3.12.0`](https://github.com/antfu/eslint-config/tree/v3.12.0) with changes:
+
+- Remove cli, throw error when lack of packages
+- Remove `vue` in dependency
+- Remove `ignores` in option, add `ignoreAll`, `ignoreRuleOnFile`, `overrideRules`
+- Rename `antfu()` to `defineEslintConfig()`
+- prefer curly everywhere
+- prefer global `Buffer`, `process`
+- ignores can start with `./`
+- loose some rules
+- ignore `solid/reactivity` in `watch()`
+- `type: 'lib'` by default
+
+```js
+import { defineEslintConfig, GLOB_MARKDOWN_CODE } from '@subframe7536/eslint-config'
+
+export default defineEslintConfig({
+  solid: true,
+  type: 'app',
+  ignoreAll: './dev/**.*',
+  ignoreRulesOnFiles: {
+    files: [GLOB_MARKDOWN_CODE],
+    rules: ['ts/explicit-function-return-type'],
+  },
+  overrideRules: {
+    'node/prefer-global/buffer': ['error', 'always'],
+  },
+})
+```
+
 # @antfu/eslint-config
 
-[![npm](https://img.shields.io/npm/v/@antfu/eslint-config?color=444&label=)](https://npmjs.com/package/@antfu/eslint-config) [![code style](https://antfu.me/badge-code-style.svg)](https://github.com/antfu/eslint-config)
+[![npm](https://img.shields.io/npm/v/@antfu/eslint-config?color=444&label=)](https://npmjs.com/package/@antfu/eslint-config) [![code style](https://antfu.me/badge-code-style.svg)]()
 
 - Auto fix for formatting (aimed to be used standalone **without** Prettier)
 - Reasonable defaults, best practices, only one line of config
