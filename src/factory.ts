@@ -183,7 +183,7 @@ export function defineEslintConfig(
         'typescript',
         { ...typescriptConfig, ...tsconfigPath ? typeAwareConfig : {} },
       ),
-      type: options.type,
+      type: options.type ?? ((enableSolid || enableVue) ? 'app' : 'lib'),
     }))
   }
 

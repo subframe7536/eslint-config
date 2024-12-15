@@ -196,7 +196,7 @@ export interface OptionsProjectType {
   /**
    * Type of the project. `lib` will enable more strict rules for libraries.
    *
-   * @default 'app'
+   * If `vue` or `solid-js` installed, default to `'app'`, else, default to `'lib'`
    */
   type?: 'app' | 'lib'
 }
