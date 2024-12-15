@@ -62,6 +62,18 @@ export const defaultPluginRenaming = {
   'yml': 'yaml',
 }
 
+const VuePackages = [
+  'vue',
+  'nuxt',
+  'vitepress',
+  '@slidev/cli',
+]
+
+const SolidPackages = [
+  'solid-js',
+  '@solid/start',
+]
+
 /**
  * Construct an array of ESLint flat config items.
  *
@@ -84,12 +96,12 @@ export function defineEslintConfig(
     jsx: enableJsx = true,
     react: enableReact = false,
     regexp: enableRegexp = true,
-    solid: enableSolid = false,
+    solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
     svelte: enableSvelte = false,
     typescript: enableTypeScript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
     unocss: enableUnoCSS = false,
-    vue: enableVue = false,
+    vue: enableVue = VuePackages.some(i => isPackageExists(i)),
   } = options
 
   let isInEditor = options.isInEditor

@@ -17,7 +17,7 @@ export async function svelte(
     quotes = 'single',
   } = typeof stylistic === 'boolean' ? {} : stylistic
 
-  await ensurePackages([
+  ensurePackages([
     'eslint-plugin-svelte',
   ])
 

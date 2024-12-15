@@ -12,7 +12,7 @@ export async function solid(
     typescript = true,
   } = options
 
-  await ensurePackages([
+  ensurePackages([
     'eslint-plugin-solid',
   ])
 

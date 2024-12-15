@@ -33,7 +33,7 @@ export async function react(
     tsconfigPath,
   } = options
 
-  await ensurePackages([
+  ensurePackages([
     '@eslint-react/eslint-plugin',
     'eslint-plugin-react-hooks',
     'eslint-plugin-react-refresh',

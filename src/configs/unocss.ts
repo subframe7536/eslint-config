@@ -10,7 +10,7 @@ export async function unocss(
     strict = false,
   } = options
 
-  await ensurePackages([
+  ensurePackages([
     '@unocss/eslint-plugin',
   ])
 

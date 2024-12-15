@@ -39,7 +39,7 @@ export async function formatters(
     }
   }
 
-  await ensurePackages([
+  ensurePackages([
     'eslint-plugin-format',
     options.markdown && options.slidev ? 'prettier-plugin-slidev' : undefined,
     options.astro ? 'prettier-plugin-astro' : undefined,

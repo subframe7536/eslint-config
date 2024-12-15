@@ -116,7 +116,7 @@ export function isPackageInScope(name: string): boolean {
   return isPackageExists(name, { paths: [scopeUrl] })
 }
 
-export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
+export function ensurePackages(packages: (string | undefined)[]): void {
   if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
     return
 
