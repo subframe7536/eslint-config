@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { isPackageExists } from 'local-pkg'
 
 const scopeUrl = fileURLToPath(new URL('.', import.meta.url))
-const isCwdInScope = isPackageExists('@antfu/eslint-config')
+const isCwdInScope = isPackageExists('@subframe7536/eslint-config')
 
 export const parserPlain = {
   meta: {
@@ -42,7 +42,7 @@ export async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedF
  *
  * @example
  * ```ts
- * import { renameRules } from '@antfu/eslint-config'
+ * import { renameRules } from '@subframe7536/eslint-config'
  *
  * export default [{
  *   rules: renameRules(
@@ -75,7 +75,7 @@ export function renameRules(
  *
  * @example
  * ```ts
- * import { renamePluginInConfigs } from '@antfu/eslint-config'
+ * import { renamePluginInConfigs } from '@subframe7536/eslint-config'
  * import someConfigs from './some-configs'
  *
  * export default renamePluginInConfigs(someConfigs, {
@@ -117,14 +117,13 @@ export function isPackageInScope(name: string): boolean {
 }
 
 export function ensurePackages(packages: (string | undefined)[]): void {
-  if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
+  if (!isCwdInScope) {
     return
-
+  }
   const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[]
-  if (nonExistingPackages.length === 0)
-    return
-
-  throw new Error(`${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}`)
+  if (nonExistingPackages.length !== 0) {
+    throw new Error(`${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}`)
+  }
 }
 
 export function isInEditorEnv(): boolean {
