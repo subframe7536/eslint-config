@@ -94,10 +94,10 @@ export function defineEslintConfig(
     componentExts = [],
     gitignore: enableGitignore = true,
     jsx: enableJsx = true,
-    react: enableReact = false,
+    react: enableReact = isPackageExists('react'),
     regexp: enableRegexp = true,
     solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
-    svelte: enableSvelte = false,
+    svelte: enableSvelte = isPackageExists('svelte'),
     typescript: enableTypeScript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
     unocss: enableUnoCSS = false,
@@ -183,7 +183,7 @@ export function defineEslintConfig(
         'typescript',
         { ...typescriptConfig, ...tsconfigPath ? typeAwareConfig : {} },
       ),
-      type: options.type ?? ((enableSolid || enableVue) ? 'app' : 'lib'),
+      type: options.type ?? ((enableReact || enableSolid || enableVue) ? 'app' : 'lib'),
     }))
   }
 
