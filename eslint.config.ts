@@ -1,7 +1,3 @@
-// @ts-expect-error missing types
-import styleMigrate from '@stylistic/eslint-plugin-migrate'
-
-// eslint-disable-next-line antfu/no-import-dist
 import subf from './dist/index'
 
 export default subf(
@@ -9,6 +5,12 @@ export default subf(
     type: 'lib',
     solid: true,
     typescript: true,
+    overrideRules: {
+      'style/max-statements-per-line': 'off',
+      'curly': 'off',
+      'node/prefer-global/process': 'off',
+      'no-constant-binary-expression': 'off',
+    },
   },
   {
     ignores: [
@@ -20,15 +22,6 @@ export default subf(
     files: ['src/**/*.ts'],
     rules: {
       'perfectionist/sort-objects': 'error',
-    },
-  },
-  {
-    files: ['src/configs/*.ts'],
-    plugins: {
-      'style-migrate': styleMigrate,
-    },
-    rules: {
-      'style-migrate/migrate': ['error', { namespaceTo: 'style' }],
     },
   },
 )

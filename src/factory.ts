@@ -1,6 +1,6 @@
 import type { Linter } from 'eslint'
 import type { RuleOptions } from './typegen'
-import type { Awaitable, ConfigNames, OptionsConfig, OptionsOverrides, TypedFlatConfigItem } from './types'
+import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types'
 
 import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import { isPackageExists } from 'local-pkg'
@@ -71,7 +71,7 @@ const VuePackages = [
 
 const SolidPackages = [
   'solid-js',
-  '@solid/start',
+  '@solidjs/start',
 ]
 
 /**
@@ -107,9 +107,9 @@ export function defineEslintConfig(
   let isInEditor = options.isInEditor
   if (isInEditor == null) {
     isInEditor = isInEditorEnv()
-    if (isInEditor)
-      // eslint-disable-next-line no-console
+    if (isInEditor) {
       console.log('[@subframe7536/eslint-config] Detected running in editor, some rules are disabled.')
+    }
   }
 
   const stylisticOptions = options.stylistic === false
@@ -387,9 +387,9 @@ export function getOverrides<K extends keyof OptionsConfig>(
 ): Partial<Linter.RulesRecord & RuleOptions> {
   const sub = resolveSubOptions(options, key)
   return {
+    ...extraRules,
     ...'overrides' in sub
       ? {
-          ...extraRules,
           ...sub.overrides as any,
         }
       : {},
