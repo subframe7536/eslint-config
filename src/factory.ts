@@ -1,9 +1,9 @@
 import type { Linter } from 'eslint'
 import type { RuleOptions } from './typegen'
-import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types'
 
-import { FlatConfigComposer } from 'eslint-flat-config-utils'
+import type { Arrayable, Awaitable, OptionsConfig, TypedFlatConfigItem } from './types'
 import { isPackageExists } from 'local-pkg'
+import { toConfigs } from './composer'
 import {
   astro,
   command,
@@ -32,8 +32,8 @@ import {
   vue,
   yaml,
 } from './configs'
-import { formatters } from './configs/formatters'
 
+import { formatters } from './configs/formatters'
 import { regexp } from './configs/regexp'
 import { basicRules, nodeRules, preventAntfuRules, solidConfig, styleRules, typeAwareConfig, typescriptConfig, vueConfig } from './subf'
 import { interopDefault, isInEditorEnv, toArray } from './utils'
@@ -74,6 +74,12 @@ const SolidPackages = [
   '@solidjs/start',
 ]
 let isShown = false
+let oldSignature: string | undefined
+let result: TypedFlatConfigItem[]
+const isReactExists = isPackageExists('react')
+const isSolidExists = SolidPackages.some(i => isPackageExists(i))
+const isSvelteExists = isPackageExists('svelte')
+const isVueExists = VuePackages.some(i => isPackageExists(i))
 /**
  * Construct an array of ESLint flat config items.
  *
@@ -86,22 +92,27 @@ let isShown = false
  */
 export function defineEslintConfig(
   options: OptionsConfig & Omit<TypedFlatConfigItem, 'files' | 'ignores'> = {},
-  ...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>[]
-): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> {
+  ...userConfigs: Awaitable<Arrayable<TypedFlatConfigItem> | Linter.Config[]>[]
+): Awaitable<TypedFlatConfigItem[]> {
+  const sig = JSON.stringify({ options, ...userConfigs })
+  if (oldSignature === sig) {
+    return result
+  }
+  oldSignature = sig
   const {
     astro: enableAstro = false,
     autoRenamePlugins = true,
     componentExts = [],
     gitignore: enableGitignore = true,
     jsx: enableJsx = true,
-    react: enableReact = isPackageExists('react'),
+    react: enableReact = isReactExists,
     regexp: enableRegexp = true,
-    solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
-    svelte: enableSvelte = isPackageExists('svelte'),
-    typescript: enableTypeScript = isPackageExists('typescript'),
+    solid: enableSolid = isSolidExists,
+    svelte: enableSvelte = isSvelteExists,
+    typescript: enableTypeScript = true,
     unicorn: enableUnicorn = true,
     unocss: enableUnoCSS = false,
-    vue: enableVue = VuePackages.some(i => isPackageExists(i)),
+    vue: enableVue = isVueExists,
   } = options
 
   let isInEditor = options.isInEditor
@@ -351,20 +362,14 @@ export function defineEslintConfig(
   if (Object.keys(fusedConfig).length)
     configs.push([fusedConfig])
 
-  let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
-
-  composer = composer
-    .append(
-      ...configs,
-      ...userConfigs as any,
-    )
-
-  if (autoRenamePlugins) {
-    composer = composer
-      .renamePlugins(defaultPluginRenaming)
+  const _ = toConfigs(
+    [...configs, ...userConfigs as any],
+    autoRenamePlugins ? defaultPluginRenaming : undefined,
+  )
+  if (!result) {
+    _.then(c => result = c)
   }
-
-  return composer
+  return result
 }
 
 export type ResolvedOptions<T> = T extends boolean

@@ -6,12 +6,13 @@ Fork from [`@antfu/eslint-config@3.12.0`](https://github.com/antfu/eslint-config
 - Remove `vue` in dependency
 - Remove `ignores` in option, add `ignoreAll`, `ignoreRuleOnFile`, `overrideRules`
 - Rename `antfu()` to `defineEslintConfig()`
-- prefer curly everywhere
-- prefer global `Buffer`, `process`
-- ignores can start with `./`
-- loose some rules
-- ignore `solid/reactivity` in `watch()`
+- Prefer curly everywhere
+- Prefer global `Buffer`, `process`
+- Ignores can start with `./`
+- Loose some rules
+- Ignore `solid/reactivity` in `watch()`
 - `type: 'lib'` by default
+- Remove config composer, cache config
 
 ```js
 import { defineEslintConfig, GLOB_MARKDOWN_CODE } from '@subframe7536/eslint-config'
