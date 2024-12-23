@@ -73,7 +73,7 @@ const SolidPackages = [
   'solid-js',
   '@solidjs/start',
 ]
-
+let isShown = false
 /**
  * Construct an array of ESLint flat config items.
  *
@@ -107,8 +107,9 @@ export function defineEslintConfig(
   let isInEditor = options.isInEditor
   if (isInEditor == null) {
     isInEditor = isInEditorEnv()
-    if (isInEditor) {
+    if (isInEditor && !isShown) {
       console.log('[@subframe7536/eslint-config] Detected running in editor, some rules are disabled.')
+      isShown = true
     }
   }
 
@@ -129,8 +130,7 @@ export function defineEslintConfig(
         name: 'antfu/gitignore',
         ...enableGitignore,
       })]))
-    }
-    else {
+    } else {
       configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r({
         name: 'antfu/gitignore',
         strict: false,
