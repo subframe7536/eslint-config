@@ -147,3 +147,16 @@ export function isInGitHooksOrLintStaged(): boolean {
     || process.env.npm_lifecycle_script?.startsWith('lint-staged')
   )
 }
+
+export async function toConfigs(
+  operations: Awaitable<TypedFlatConfigItem[]>[],
+  renames?: Record<string, string>,
+): Promise<TypedFlatConfigItem[]> {
+  const original = (await combine(...operations)).filter(Boolean)
+  return renames
+    ? renamePluginInConfigs(
+        original,
+        renames,
+      )
+    : original
+}

@@ -3,7 +3,6 @@ import type { RuleOptions } from './typegen'
 
 import type { Arrayable, Awaitable, OptionsConfig, TypedFlatConfigItem } from './types'
 import { isPackageExists } from 'local-pkg'
-import { toConfigs } from './composer'
 import {
   astro,
   command,
@@ -32,11 +31,11 @@ import {
   vue,
   yaml,
 } from './configs'
-
 import { formatters } from './configs/formatters'
+
 import { regexp } from './configs/regexp'
 import { basicRules, nodeRules, preventAntfuRules, solidConfig, styleRules, typeAwareConfig, typescriptConfig, vueConfig } from './subf'
-import { interopDefault, isInEditorEnv, toArray } from './utils'
+import { interopDefault, isInEditorEnv, toArray, toConfigs } from './utils'
 
 const flatConfigProps = [
   'name',
