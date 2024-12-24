@@ -154,9 +154,6 @@ export async function toConfigs(
 ): Promise<TypedFlatConfigItem[]> {
   const original = (await combine(...operations)).filter(Boolean)
   return renames
-    ? renamePluginInConfigs(
-        original,
-        renames,
-      )
+    ? renamePluginInConfigs(original, renames)
     : original
 }
