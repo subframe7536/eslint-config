@@ -361,14 +361,10 @@ export function defineEslintConfig(
   if (Object.keys(fusedConfig).length)
     configs.push([fusedConfig])
 
-  const _ = toConfigs(
+  return toConfigs(
     [...configs, ...userConfigs as any],
     autoRenamePlugins ? defaultPluginRenaming : undefined,
-  )
-  if (!result) {
-    _.then(c => result = c)
-  }
-  return result
+  ).then(data => result = data)
 }
 
 export type ResolvedOptions<T> = T extends boolean
