@@ -75,10 +75,6 @@ const SolidPackages = [
 let isShown = false
 let oldSignature: string | undefined
 let result: TypedFlatConfigItem[]
-const isReactExists = isPackageExists('react')
-const isSolidExists = SolidPackages.some(i => isPackageExists(i))
-const isSvelteExists = isPackageExists('svelte')
-const isVueExists = VuePackages.some(i => isPackageExists(i))
 /**
  * Construct an array of ESLint flat config items.
  *
@@ -104,14 +100,14 @@ export function defineEslintConfig(
     componentExts = [],
     gitignore: enableGitignore = true,
     jsx: enableJsx = true,
-    react: enableReact = isReactExists,
+    react: enableReact = isPackageExists('react'),
     regexp: enableRegexp = true,
-    solid: enableSolid = isSolidExists,
-    svelte: enableSvelte = isSvelteExists,
+    solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
+    svelte: enableSvelte = isPackageExists('svelte'),
     typescript: enableTypeScript = true,
     unicorn: enableUnicorn = true,
     unocss: enableUnoCSS = false,
-    vue: enableVue = isVueExists,
+    vue: enableVue = VuePackages.some(i => isPackageExists(i)),
   } = options
 
   let isInEditor = options.isInEditor
@@ -135,17 +131,17 @@ export function defineEslintConfig(
   const configs: Awaitable<TypedFlatConfigItem[]>[] = []
 
   if (enableGitignore) {
-    if (typeof enableGitignore !== 'boolean') {
-      configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r({
-        name: 'antfu/gitignore',
-        ...enableGitignore,
-      })]))
-    } else {
-      configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r({
-        name: 'antfu/gitignore',
-        strict: false,
-      })]))
-    }
+    configs.push(
+      interopDefault(import('eslint-config-flat-gitignore'))
+        .then(r => [
+          r({
+            name: 'antfu/gitignore',
+            ...typeof enableGitignore !== 'boolean'
+              ? enableGitignore
+              : { strict: false },
+          }),
+        ]),
+    )
   }
 
   const typescriptOptions = resolveSubOptions(options, 'typescript')
@@ -388,10 +384,6 @@ export function getOverrides<K extends keyof OptionsConfig>(
   const sub = resolveSubOptions(options, key)
   return {
     ...extraRules,
-    ...'overrides' in sub
-      ? {
-          ...sub.overrides as any,
-        }
-      : {},
+    ...'overrides' in sub ? { ...sub.overrides as any } : {},
   }
 }
