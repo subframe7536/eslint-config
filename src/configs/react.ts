@@ -70,18 +70,6 @@ export async function react(
 
   return [
     {
-      name: 'antfu/react/setup',
-      plugins: {
-        'react': plugins['@eslint-react'],
-        'react-dom': plugins['@eslint-react/dom'],
-        'react-hooks': pluginReactHooks,
-        'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
-        'react-naming-convention': plugins['@eslint-react/naming-convention'],
-        'react-refresh': pluginReactRefresh,
-        'react-web-api': plugins['@eslint-react/web-api'],
-      },
-    },
-    {
       files,
       languageOptions: {
         parserOptions: {
@@ -91,7 +79,16 @@ export async function react(
         },
         sourceType: 'module',
       },
-      name: 'antfu/react/rules',
+      name: 'subf/react/rules',
+      plugins: {
+        'react': plugins['@eslint-react'],
+        'react-dom': plugins['@eslint-react/dom'],
+        'react-hooks': pluginReactHooks,
+        'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
+        'react-naming-convention': plugins['@eslint-react/naming-convention'],
+        'react-refresh': pluginReactRefresh,
+        'react-web-api': plugins['@eslint-react/web-api'],
+      },
       rules: {
         // recommended rules from @eslint-react/dom
         'react-dom/no-children-in-void-dom-elements': 'warn',

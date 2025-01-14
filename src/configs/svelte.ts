@@ -31,23 +31,20 @@ export async function svelte(
 
   return [
     {
-      name: 'antfu/svelte/setup',
-      plugins: {
-        svelte: pluginSvelte,
-      },
-    },
-    {
       files,
       languageOptions: {
         parser: parserSvelte,
         parserOptions: {
           extraFileExtensions: ['.svelte'],
           parser: options.typescript
-            ? await interopDefault(import('@typescript-eslint/parser')) as any
+            ? await interopDefault(import('@typescript-eslint/parser'))
             : null,
         },
       },
-      name: 'antfu/svelte/rules',
+      name: 'subf/svelte/rules',
+      plugins: {
+        svelte: pluginSvelte,
+      },
       processor: pluginSvelte.processors['.svelte'],
       rules: {
         'import/no-mutable-exports': 'off',

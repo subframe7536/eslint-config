@@ -31,12 +31,6 @@ export async function solid(
 
   return [
     {
-      name: 'subf/solid/setup',
-      plugins: {
-        solid: pluginSolid,
-      },
-    },
-    {
       files,
       languageOptions: {
         parser: parserTs,
@@ -49,6 +43,9 @@ export async function solid(
         sourceType: 'module',
       },
       name: 'subf/solid/rules',
+      plugins: {
+        solid: pluginSolid,
+      },
       rules: {
         // reactivity
         'solid/components-return-once': 'warn',

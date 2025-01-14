@@ -26,17 +26,14 @@ export async function toml(
 
   return [
     {
-      name: 'antfu/toml/setup',
-      plugins: {
-        toml: pluginToml,
-      },
-    },
-    {
       files,
       languageOptions: {
         parser: parserToml,
       },
-      name: 'antfu/toml/rules',
+      name: 'subf/toml/rules',
+      plugins: {
+        toml: pluginToml,
+      },
       rules: {
         'style/spaced-comment': 'off',
 
