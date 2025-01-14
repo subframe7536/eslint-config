@@ -99,19 +99,24 @@ export function defineEslintConfig(
     autoRenamePlugins = true,
     componentExts = [],
     gitignore: enableGitignore = true,
+    jsonc: enableJsonc = true,
     jsx: enableJsx = true,
+    markdown: enableMarkdown = true,
     react: enableReact = isPackageExists('react'),
     regexp: enableRegexp = true,
     solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
     svelte: enableSvelte = isPackageExists('svelte'),
+    test: enableTest = true,
+    toml: enableToml = true,
     typescript: enableTypeScript = true,
     unicorn: enableUnicorn = true,
     unocss: enableUnoCSS = false,
     vue: enableVue = VuePackages.some(i => isPackageExists(i)),
+    yaml: enableYaml = true,
   } = options
 
   let isInEditor = options.isInEditor
-  if (isInEditor == null) {
+  if (isInEditor === null || isInEditor === undefined) {
     isInEditor = isInEditorEnv()
     if (isInEditor && !isShown) {
       console.log('[@subframe7536/eslint-config] Detected running in editor, some rules are disabled.')
@@ -125,8 +130,9 @@ export function defineEslintConfig(
       ? options.stylistic
       : {}
 
-  if (stylisticOptions && !('jsx' in stylisticOptions))
+  if (stylisticOptions && !('jsx' in stylisticOptions)) {
     stylisticOptions.jsx = enableJsx
+  }
 
   const configs: Awaitable<TypedFlatConfigItem[]>[] = []
 
@@ -172,10 +178,6 @@ export function defineEslintConfig(
     configs.push(unicorn(enableUnicorn === true ? {} : enableUnicorn))
   }
 
-  if (enableVue) {
-    componentExts.push('vue')
-  }
-
   if (enableJsx) {
     configs.push(jsx())
   }
@@ -205,7 +207,7 @@ export function defineEslintConfig(
     configs.push(regexp(typeof enableRegexp === 'boolean' ? {} : enableRegexp))
   }
 
-  if (options.test ?? true) {
+  if (enableTest) {
     configs.push(test({
       isInEditor,
       overrides: getOverrides(options, 'test'),
@@ -213,6 +215,7 @@ export function defineEslintConfig(
   }
 
   if (enableVue) {
+    componentExts.push('vue')
     configs.push(vue({
       ...resolveSubOptions(options, 'vue'),
       overrides: getOverrides(options, 'vue', vueConfig),
@@ -238,6 +241,7 @@ export function defineEslintConfig(
   }
 
   if (enableSvelte) {
+    componentExts.push('svelte')
     configs.push(svelte({
       overrides: getOverrides(options, 'svelte'),
       stylistic: stylisticOptions,
@@ -255,11 +259,10 @@ export function defineEslintConfig(
   if (enableAstro) {
     configs.push(astro({
       overrides: getOverrides(options, 'astro'),
-      stylistic: stylisticOptions,
     }))
   }
 
-  if (options.jsonc ?? true) {
+  if (enableJsonc) {
     configs.push(
       jsonc({
         overrides: getOverrides(options, 'jsonc'),
@@ -270,21 +273,21 @@ export function defineEslintConfig(
     )
   }
 
-  if (options.yaml ?? true) {
+  if (enableYaml) {
     configs.push(yaml({
       overrides: getOverrides(options, 'yaml'),
       stylistic: stylisticOptions,
     }))
   }
 
-  if (options.toml ?? true) {
+  if (enableToml) {
     configs.push(toml({
       overrides: getOverrides(options, 'toml'),
       stylistic: stylisticOptions,
     }))
   }
 
-  if (options.markdown ?? true) {
+  if (enableMarkdown) {
     configs.push(
       markdown(
         {
@@ -350,12 +353,15 @@ export function defineEslintConfig(
   // User can optionally pass a flat config item to the first argument
   // We pick the known keys as ESLint would do schema validation
   const fusedConfig = flatConfigProps.reduce((acc, key) => {
-    if (key in options)
+    if (key in options) {
       acc[key] = options[key] as any
+    }
     return acc
   }, {} as TypedFlatConfigItem)
-  if (Object.keys(fusedConfig).length)
+
+  if (Object.keys(fusedConfig).length) {
     configs.push([fusedConfig])
+  }
 
   return toConfigs(
     [...configs, ...userConfigs as any],

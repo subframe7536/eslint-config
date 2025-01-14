@@ -1,10 +1,11 @@
-import subf from './dist/index'
+import subf from './src'
 
 export default subf(
   {
     type: 'lib',
     solid: true,
     typescript: true,
+    vue: true,
     overrideRules: {
       'style/max-statements-per-line': 'off',
       'curly': 'off',
