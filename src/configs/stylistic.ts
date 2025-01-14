@@ -1,6 +1,5 @@
 import type { OptionsOverrides, StylisticConfig, TypedFlatConfigItem } from '../types'
 
-import { pluginAntfu } from '../plugins'
 import { interopDefault } from '../utils'
 
 export const StylisticConfigDefaults: StylisticConfig = {
@@ -10,9 +9,7 @@ export const StylisticConfigDefaults: StylisticConfig = {
   semi: false,
 }
 
-export interface StylisticOptions extends StylisticConfig, OptionsOverrides {
-  lessOpinionated?: boolean
-}
+export interface StylisticOptions extends StylisticConfig, OptionsOverrides {}
 
 export async function stylistic(
   options: StylisticOptions = {},
@@ -20,7 +17,6 @@ export async function stylistic(
   const {
     indent,
     jsx,
-    lessOpinionated = false,
     overrides = {},
     quotes,
     semi,
@@ -44,26 +40,11 @@ export async function stylistic(
     {
       name: 'subf/stylistic/rules',
       plugins: {
-        antfu: pluginAntfu,
         style: pluginStylistic,
       },
       rules: {
         ...config.rules,
-
-        'antfu/consistent-chaining': 'error',
-        'antfu/consistent-list-newline': 'error',
-
-        ...(lessOpinionated
-          ? {
-              curly: ['error', 'all'],
-            }
-          : {
-              'antfu/curly': 'error',
-              'antfu/if-newline': 'error',
-              'antfu/top-level-function': 'error',
-            }
-        ),
-
+        curly: ['error', 'all'],
         ...overrides,
       },
     },

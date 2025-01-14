@@ -23,7 +23,6 @@ export async function astro(
       rules: {
         // Astro uses top level await for e.g. data fetching
         // https://docs.astro.build/en/guides/data-fetching/#fetch-in-astro
-        'antfu/no-top-level-await': 'off',
         'astro/no-set-html-directive': 'off',
         'astro/semi': 'off',
         ...overrides,

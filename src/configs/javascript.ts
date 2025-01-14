@@ -2,7 +2,7 @@ import type { OptionsIsInEditor, OptionsOverrides, TypedFlatConfigItem } from '.
 
 import globals from 'globals'
 
-import { pluginAntfu, pluginUnusedImports } from '../plugins'
+import { pluginUnusedImports } from '../plugins'
 
 export async function javascript(
   options: OptionsIsInEditor & OptionsOverrides = {},
@@ -41,13 +41,10 @@ export async function javascript(
     {
       name: 'antfu/javascript/rules',
       plugins: {
-        'antfu': pluginAntfu,
         'unused-imports': pluginUnusedImports,
       },
       rules: {
         'accessor-pairs': ['error', { enforceForClassMembers: true, setWithoutGet: true }],
-
-        'antfu/no-top-level-await': 'error',
 
         'array-callback-return': 'error',
         'block-scoped-var': 'error',

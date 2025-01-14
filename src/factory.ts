@@ -31,10 +31,11 @@ import {
   vue,
   yaml,
 } from './configs'
-import { formatters } from './configs/formatters'
+import { antfu } from './configs/antfu'
 
+import { formatters } from './configs/formatters'
 import { regexp } from './configs/regexp'
-import { basicRules, nodeRules, preventAntfuRules, solidConfig, styleRules, typeAwareConfig, typescriptConfig, vueConfig } from './subf'
+import { basicRules, nodeRules, solidConfig, styleRules, typeAwareConfig, typescriptConfig, vueConfig } from './subf'
 import { interopDefault, isInEditorEnv, toArray, toConfigs } from './utils'
 
 const flatConfigProps = [
@@ -169,8 +170,7 @@ export function defineEslintConfig(
       stylistic: stylisticOptions,
     }),
     command(),
-
-    // Optional plugins (installed but not enabled by default)
+    antfu(),
     perfectionist(),
   )
 
@@ -198,7 +198,6 @@ export function defineEslintConfig(
   if (stylisticOptions) {
     configs.push(stylistic({
       ...stylisticOptions,
-      lessOpinionated: options.lessOpinionated,
       overrides: getOverrides(options, 'stylistic', styleRules),
     }))
   }
@@ -311,7 +310,6 @@ export function defineEslintConfig(
       name: 'subf/basic/rules',
       rules: {
         ...basicRules,
-        ...preventAntfuRules,
         ...nodeRules,
       },
     }],

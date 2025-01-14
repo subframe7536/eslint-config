@@ -13,10 +13,6 @@ export const basicRules: Rules & Linter.RulesRecord = {
   'prefer-const': 'off',
   'prefer-promise-reject-errors': 'off',
 }
-export const preventAntfuRules: Rules & Linter.RulesRecord = {
-  'antfu/no-import-dist': 'off',
-  'antfu/no-top-level-await': 'off',
-}
 export const nodeRules: Rules & Linter.RulesRecord = {
   // always use global Buffer
   'node/prefer-global/buffer': ['error', 'always'],

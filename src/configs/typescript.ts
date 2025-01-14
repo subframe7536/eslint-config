@@ -10,7 +10,6 @@ import type {
 
 import process from 'node:process'
 import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs'
-import { pluginAntfu } from '../plugins'
 import { interopDefault, renameRules } from '../utils'
 
 export async function typescript(
@@ -102,7 +101,6 @@ export async function typescript(
       // Install the plugins without globs, so they can be configured separately.
       name: 'subf/typescript/setup',
       plugins: {
-        antfu: pluginAntfu,
         ts: pluginTs as any,
       },
     },
