@@ -4,6 +4,7 @@ import type { RuleOptions } from './typegen'
 import type { Arrayable, Awaitable, OptionsConfig, TypedFlatConfigItem } from './types'
 import { isPackageExists } from 'local-pkg'
 import {
+  antfu,
   astro,
   command,
   comments,
@@ -31,7 +32,6 @@ import {
   vue,
   yaml,
 } from './configs'
-import { antfu } from './configs/antfu'
 
 import { formatters } from './configs/formatters'
 import { regexp } from './configs/regexp'

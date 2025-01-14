@@ -1,8 +1,7 @@
 import type { OptionsIsInEditor, OptionsOverrides, TypedFlatConfigItem } from '../types'
-
 import globals from 'globals'
 
-import { pluginUnusedImports } from '../plugins'
+import { interopDefault } from '../utils'
 
 export async function javascript(
   options: OptionsIsInEditor & OptionsOverrides = {},
@@ -11,6 +10,8 @@ export async function javascript(
     isInEditor = false,
     overrides = {},
   } = options
+
+  const pluginUnusedImports = await interopDefault(import('eslint-plugin-unused-imports'))
 
   return [
     {

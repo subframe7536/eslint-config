@@ -1,6 +1,5 @@
 import type { TypedFlatConfigItem } from '../types'
-
-import { pluginPerfectionist } from '../plugins'
+import { interopDefault } from '../utils'
 
 /**
  * Perfectionist plugin for props and items sorting.
@@ -8,6 +7,7 @@ import { pluginPerfectionist } from '../plugins'
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
 export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
+  const pluginPerfectionist = await interopDefault(import('eslint-plugin-perfectionist'))
   return [
     {
       name: 'antfu/perfectionist/setup',

@@ -29,7 +29,7 @@
     "stub": "tsup --format esm",
     "dev": "bunx @eslint/config-inspector --config eslint.config.ts",
     "watch": "tsup --format esm,cjs --watch",
-    "format": "eslint --flag unstable_ts_config . --fix",
+    "format": "eslint . --fix",
     "release": "bun run build && bumpp && npm publish",
     "test": "vitest"
   },

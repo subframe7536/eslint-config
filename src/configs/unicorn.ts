@@ -1,8 +1,8 @@
 import type { OptionsUnicorn, TypedFlatConfigItem } from '../types'
-
-import { pluginUnicorn } from '../plugins'
+import { interopDefault } from '../utils'
 
 export async function unicorn(options: OptionsUnicorn = {}): Promise<TypedFlatConfigItem[]> {
+  const pluginUnicorn = await interopDefault(import('eslint-plugin-unicorn'))
   return [
     {
       name: 'antfu/unicorn/rules',

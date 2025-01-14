@@ -1,8 +1,9 @@
 import type { TypedFlatConfigItem } from '../types'
-
-import { pluginComments } from '../plugins'
+import { interopDefault } from '../utils'
 
 export async function comments(): Promise<TypedFlatConfigItem[]> {
+  // @ts-expect-error no types
+  const pluginComments = await interopDefault(import('@eslint-community/eslint-plugin-eslint-comments'))
   return [
     {
       name: 'antfu/eslint-comments/rules',

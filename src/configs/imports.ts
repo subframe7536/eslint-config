@@ -1,12 +1,13 @@
 import type { OptionsStylistic, TypedFlatConfigItem } from '../types'
 
-import { pluginImport } from '../plugins'
+import { interopDefault } from '../utils'
 
 export async function imports(options: OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
   const {
     stylistic = true,
   } = options
 
+  const pluginImport = await interopDefault(import('eslint-plugin-import-x'))
   return [
     {
       name: 'antfu/imports/rules',
