@@ -258,6 +258,7 @@ export function defineEslintConfig(
   if (enableAstro) {
     configs.push(astro({
       overrides: getOverrides(options, 'astro'),
+      semi: stylisticOptions !== false ? (stylisticOptions.semi ?? false) : undefined,
     }))
   }
 
