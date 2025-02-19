@@ -10,7 +10,7 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
   const pluginPerfectionist = await interopDefault(import('eslint-plugin-perfectionist'))
   return [
     {
-      name: 'antfu/perfectionist/setup',
+      name: 'subf/perfectionist/setup',
       plugins: {
         perfectionist: pluginPerfectionist,
       },
@@ -18,9 +18,7 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
         'perfectionist/sort-exports': ['error', { order: 'asc', type: 'natural' }],
         'perfectionist/sort-imports': ['error', {
           groups: [
-            'type',
-            ['parent-type', 'sibling-type', 'index-type', 'internal-type'],
-
+            ['type', 'parent-type', 'sibling-type', 'index-type', 'internal-type'],
             'builtin',
             'external',
             'internal',
@@ -29,7 +27,7 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
             'object',
             'unknown',
           ],
-          newlinesBetween: 'ignore',
+          newlinesBetween: 'always',
           order: 'asc',
           type: 'natural',
         }],
