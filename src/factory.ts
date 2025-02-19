@@ -1,14 +1,16 @@
-import type { Linter } from 'eslint'
 import type { RuleOptions } from './typegen'
-
 import type { Arrayable, Awaitable, OptionsConfig, TypedFlatConfigItem } from './types'
+import type { Linter } from 'eslint'
+
 import { isPackageExists } from 'local-pkg'
+
 import {
   antfu,
   astro,
   command,
   comments,
   disables,
+  formatters,
   ignores,
   imports,
   javascript,
@@ -19,6 +21,7 @@ import {
   node,
   perfectionist,
   react,
+  regexp,
   solid,
   sortPackageJson,
   sortTsconfig,
@@ -32,10 +35,15 @@ import {
   vue,
   yaml,
 } from './configs'
-
-import { formatters } from './configs/formatters'
-import { regexp } from './configs/regexp'
-import { basicRules, nodeRules, solidConfig, styleRules, typeAwareConfig, typescriptConfig, vueConfig } from './subf'
+import {
+  basicRules,
+  nodeRules,
+  solidConfig,
+  styleRules,
+  typeAwareConfig,
+  typescriptConfig,
+  vueConfig,
+} from './subf'
 import { interopDefault, isInEditorEnv, toArray, toConfigs } from './utils'
 
 const flatConfigProps = [

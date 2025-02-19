@@ -1,4 +1,5 @@
 import type { TypedFlatConfigItem } from '../types'
+
 import { interopDefault } from '../utils'
 
 /**

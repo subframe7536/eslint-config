@@ -2,6 +2,7 @@ import type { Awaitable, TypedFlatConfigItem } from './types'
 
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+
 import { isPackageExists } from 'local-pkg'
 
 const scopeUrl = fileURLToPath(new URL('.', import.meta.url))
