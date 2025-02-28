@@ -6,6 +6,7 @@ export default subf(
     solid: true,
     typescript: true,
     vue: true,
+    astro: true,
     overrideRules: {
       'style/max-statements-per-line': 'off',
       'curly': 'off',
