@@ -52,14 +52,9 @@ export async function astro(
         'astro/no-deprecated-getentrybyslug': 'error',
         'astro/no-set-html-directive': 'off',
         'astro/no-unused-define-vars-in-style': 'error',
-        'astro/semi': 'off',
         'astro/valid-compile': 'error',
 
-        // fix <script /> tag
-        'style/indent': 'off',
-        'style/jsx-closing-tag-location': 'off',
         'style/jsx-one-expression-per-line': 'off',
-        'style/no-multiple-empty-lines': 'off',
         // fix style/semi not working in astro file
         ...semi !== undefined
           ? { 'astro/semi': ['error', semi ? 'always' : 'never'] }
