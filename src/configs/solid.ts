@@ -70,7 +70,8 @@ export async function solid(
         'solid/no-unknown-namespaces': 'error',
         'solid/prefer-for': 'error',
         'solid/reactivity': 'warn',
-        'solid/self-closing-comp': 'error',
+        // same as 'style/jsx-self-closing-comp'
+        // 'solid/self-closing-comp': 'error',
         'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
         ...typescript
           ? {

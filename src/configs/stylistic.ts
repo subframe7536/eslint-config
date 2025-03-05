@@ -43,7 +43,10 @@ export async function stylistic(
       },
       rules: {
         ...config.rules,
-        curly: ['error', 'all'],
+        'curly': ['error', 'all'],
+        'style/generator-star-spacing': ['error', { after: true, before: false }],
+        'style/jsx-self-closing-comp': ['error', { component: true, html: true }],
+        'style/yield-star-spacing': ['error', { after: true, before: false }],
         ...overrides,
       },
     },
