@@ -12,9 +12,7 @@ export async function solid(
     typescript = true,
   } = options
 
-  ensurePackages([
-    'eslint-plugin-solid',
-  ])
+  ensurePackages(['eslint-plugin-solid'])
 
   const tsconfigPath = options?.tsconfigPath
     ? toArray(options.tsconfigPath)

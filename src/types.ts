@@ -10,7 +10,7 @@ export type Arrayable<T> = T | T[]
 
 export type Awaitable<T> = T | Promise<T>
 
-export type Rules = RuleOptions
+export interface Rules extends RuleOptions {}
 
 export type { ConfigNames }
 

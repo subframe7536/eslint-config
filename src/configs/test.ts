@@ -1,7 +1,8 @@
+/* eslint-disable perfectionist/sort-objects */
 import type { OptionsFiles, OptionsIsInEditor, OptionsOverrides, TypedFlatConfigItem } from '../types'
 
 import { GLOB_TESTS } from '../globs'
-import { interopDefault } from '../utils'
+import { ensurePackages, interopDefault } from '../utils'
 
 // Hold the reference so we don't redeclare the plugin on each call
 let _pluginTest: any
@@ -14,6 +15,8 @@ export async function test(
     isInEditor = false,
     overrides = {},
   } = options
+
+  ensurePackages(['@vitest/eslint-plugin'])
 
   const [
     pluginVitest,
@@ -50,12 +53,10 @@ export async function test(
         'test/prefer-lowercase-title': 'error',
 
         // Disables
-        ...{
-          'antfu/no-top-level-await': 'off',
-          'no-unused-expressions': 'off',
-          'node/prefer-global/process': 'off',
-          'ts/explicit-function-return-type': 'off',
-        },
+        'antfu/no-top-level-await': 'off',
+        'no-unused-expressions': 'off',
+        'node/prefer-global/process': 'off',
+        'ts/explicit-function-return-type': 'off',
 
         ...overrides,
       },

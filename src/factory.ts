@@ -115,11 +115,11 @@ export function defineEslintConfig(
     regexp: enableRegexp = true,
     solid: enableSolid = SolidPackages.some(i => isPackageExists(i)),
     svelte: enableSvelte = isPackageExists('svelte'),
-    test: enableTest = true,
+    test: enableTest = isPackageExists('vitest'),
     toml: enableToml = true,
     typescript: enableTypeScript = true,
     unicorn: enableUnicorn = true,
-    unocss: enableUnoCSS = false,
+    unocss: enableUnoCSS = isPackageExists('@unocss/core'),
     vue: enableVue = VuePackages.some(i => isPackageExists(i)),
     yaml: enableYaml = true,
   } = options
