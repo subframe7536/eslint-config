@@ -5,6 +5,6 @@ export default defineConfig({
     'src/index.ts',
     'src/cli.ts',
   ],
-  format: ['cjs', 'esm'],
+  format: 'esm',
   shims: true,
 })
