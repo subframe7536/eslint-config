@@ -81,8 +81,6 @@ const SolidPackages = [
   'solid-js',
   '@solidjs/start',
 ]
-let isShown = false
-let oldSignature: string | undefined
 let result: TypedFlatConfigItem[]
 /**
  * Construct an array of ESLint flat config items.
@@ -99,10 +97,12 @@ export function defineEslintConfig(
   ...userConfigs: Awaitable<Arrayable<TypedFlatConfigItem> | Linter.Config[]>[]
 ): Awaitable<TypedFlatConfigItem[]> {
   const sig = JSON.stringify({ options, ...userConfigs })
-  if (oldSignature === sig) {
+  // @ts-expect-error fxxk
+  if (process.__oldSignature === sig) {
     return result
   }
-  oldSignature = sig
+  // @ts-expect-error fxxk
+  process.__oldSignature = sig
   const {
     astro: enableAstro = isPackageExists('astro'),
     autoRenamePlugins = true,
@@ -127,9 +127,8 @@ export function defineEslintConfig(
   let isInEditor = options.isInEditor
   if (isInEditor === null || isInEditor === undefined) {
     isInEditor = isInEditorEnv()
-    if (isInEditor && !isShown) {
+    if (isInEditor) {
       console.log('[@subframe7536/eslint-config] Detected running in editor, some rules are disabled.')
-      isShown = true
     }
   }
 
