@@ -305,7 +305,7 @@ export async function imports(_options: OptionsStylistic = {}): Promise<TypedFla
         'antfu/import-dedupe': 'error',
         'antfu/no-import-dist': 'error',
         'antfu/no-import-node-modules-by-path': 'error',
-        'subf/consistent-type-specifier-style': ['error'],
+        'import/consistent-type-specifier-style': ['error'],
       },
     },
   ]
