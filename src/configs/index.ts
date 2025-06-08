@@ -1,6 +1,5 @@
 export * from './antfu'
 export * from './astro'
-export * from './command'
 export * from './comments'
 export * from './disables'
 export * from './formatters'

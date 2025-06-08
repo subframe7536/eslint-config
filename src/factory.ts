@@ -7,7 +7,6 @@ import { isPackageExists } from 'local-pkg'
 import {
   antfu,
   astro,
-  command,
   comments,
   disables,
   formatters,
@@ -175,7 +174,6 @@ export function defineEslintConfig(
     imports({
       stylistic: stylisticOptions,
     }),
-    command(),
     antfu(),
     perfectionist(),
   )
